@@ -1,0 +1,307 @@
+IGUI_RU = {
+
+    IGUI_KnoxEvent_Speech_Confirmation_01 = "Окей.",
+    IGUI_KnoxEvent_Speech_Confirmation_02 = "Да.",
+    IGUI_KnoxEvent_Speech_Confirmation_03 = "Как хочешь.",
+    IGUI_KnoxEvent_Speech_Confirmation_04 = "Хорошо.",
+    IGUI_KnoxEvent_Speech_Confirmation_05 = "Конечно.",
+
+    IGUI_KnoxEvent_Speech_No_01 = "Нет.",
+    IGUI_KnoxEvent_Speech_No_02 = "Неа.",
+    IGUI_KnoxEvent_Speech_No_03 = "Точно нет.",
+    IGUI_KnoxEvent_Speech_No_04 = "Я не уверен.",
+
+    IGUI_KnoxEvent_Speech_DeathFromZombies_01 = "НЕЕЕЕТ!!!!!!!! НЕЕЕТ!!!!!",
+    IGUI_KnoxEvent_Speech_DeathFromZombies_02 = "ПОЖАЛУЙСТА!!! ПОМОГИТЕ МНЕ БОЖЕ!!!!",
+    IGUI_KnoxEvent_Speech_DeathFromZombies_03 = "ПОМОГИТЕ МН- ААААА!!!",
+    IGUI_KnoxEvent_Speech_DeathFromZombies_04 = "АХХ СУКА!!! НЕТ, ПРО- ААААА!!!",
+    IGUI_KnoxEvent_Speech_DeathFromZombies_05 = "ПИЗДЕЦ! ОТПУСТИ, НЕ-",
+    IGUI_KnoxEvent_Speech_DeathFromZombies_06 = "ПОМОГИ МНЕ!!! УМОЛЯ-",
+    IGUI_KnoxEvent_Speech_DeathFromZombies_07 = "НЕЕЕЕТ-",
+    IGUI_KnoxEvent_Speech_DeathFromZombies_08 = "ОХ ПИЗДА!!! ПРОШУ ПОМОГ-",
+    IGUI_KnoxEvent_Speech_DeathFromZombies_09 = "НЕТ!!! НЕЕЕТ ПОЖАЛУЙСТА!!!-",
+    IGUI_KnoxEvent_Speech_DeathFromZombies_10 = "НЕТ!!! НЕЕЕТ УМОЛЯЮ-",
+
+    IGUI_KnoxEvent_Speech_Tired_01 = "Я так... Сильно... Устал...",
+    IGUI_KnoxEvent_Speech_Tired_02 = "Мне нужно отдохнуть, Я не могу идти дальше...",
+    IGUI_KnoxEvent_Speech_Tired_03 = "Я пиздец как устал...",
+    IGUI_KnoxEvent_Speech_Tired_04 = "Я очень устал...",
+    IGUI_KnoxEvent_Speech_Tired_05 = "Может отдохнем? Я не уверен что смогу идти...",
+    IGUI_KnoxEvent_Speech_Tired_06 = "Блядь... Я не могу даже дышать...",
+    IGUI_KnoxEvent_Speech_Tired_07 = "Я не могу... Продолжать... Я слишком устал...",
+    IGUI_KnoxEvent_Speech_Tired_08 = "Пожалуйста, давай отдохнем...",
+    IGUI_KnoxEvent_Speech_Tired_09 = "Сука...",
+    IGUI_KnoxEvent_Speech_Tired_10 = "Давай просто... Присядим на время...",
+
+    IGUI_KnoxEvent_Speech_CantCarryMore_01 = "Я не могу держать груз, давай вернемся.",
+    IGUI_KnoxEvent_Speech_CantCarryMore_02 = "Я не могу дальше держать груз, давай вернемся.",
+    IGUI_KnoxEvent_Speech_CantCarryMore_03 = "Это все что я могу держать.",
+    IGUI_KnoxEvent_Speech_CantCarryMore_04 = "У меня нет НИКАКОГО места чтобы держать все это.",    
+    IGUI_KnoxEvent_Speech_CantCarryMore_05 = "Давай вернемся, мой рюкзак полон.",
+    IGUI_KnoxEvent_Speech_CantCarryMore_06 = "Я не могу взять ничего, давай вернемся обратно.",    
+    IGUI_KnoxEvent_Speech_CantCarryMore_07 = "Я не могу держать что либо.."",
+
+    IGUI_KnoxEvent_Speech_Healing_01 = "Лечусь!",
+    IGUI_KnoxEvent_Speech_Healing_02 = "Блядь! Дай мне перебинтоваться.",
+    IGUI_KnoxEvent_Speech_Healing_03 = "Стой, подожди! Мне нужно перебинтоваться.",
+    IGUI_KnoxEvent_Speech_Healing_04 = "Ай! Черт, я ранен. Нужно перебинтоваться.",    
+    IGUI_KnoxEvent_Speech_Healing_05 = "Мне нужно подлататься.",
+    IGUI_KnoxEvent_Speech_Healing_06 = "Прикрой меня! Я лечусь!",
+    IGUI_KnoxEvent_Speech_Healing_07 = "Ох черт! Болит.. Очень сильно.",    
+    IGUI_KnoxEvent_Speech_Healing_08 = "Ладно! Фу, Это выглядит плохо. Дай мне перебинтоваться.",
+    IGUI_KnoxEvent_Speech_Healing_09 = "У меня кровь льется буд-то из свиньи. Дай перебинтоваться.",  
+
+    IGUI_KnoxEvent_Speech_Escape_01 = "Ладно! Ладно!",
+    IGUI_KnoxEvent_Speech_Escape_02 = "Уходи!",
+    IGUI_KnoxEvent_Speech_Escape_03 = "Слишком много!",
+    IGUI_KnoxEvent_Speech_Escape_04 = "Уходи! Просто уходи!",
+    IGUI_KnoxEvent_Speech_Escape_05 = "Блядь!",
+    IGUI_KnoxEvent_Speech_Escape_06 = "Пиздец! Просто убегай!",
+    IGUI_KnoxEvent_Speech_Escape_07 = "БЕГИ!",
+    IGUI_KnoxEvent_Speech_Escape_08 = "ПРОСТО БЕГИ КУДА-ТО, МЫ ВСТРЕТИМСЯ ПОЗЖЕ!",
+    IGUI_KnoxEvent_Speech_Escape_09 = "ПРОСТО БЕГИ!",
+    IGUI_KnoxEvent_Speech_Escape_010 = "Ну нахуй! Беги!",
+
+    IGUI_KnoxEvent_Speech_FriendlyFireMeleeWeapon_01 = "ЧТО ТЫ ТВОРИШЬ?!",
+    IGUI_KnoxEvent_Speech_FriendlyFireMeleeWeapon_02 = "ЧТО??? ЧТО Я СДЕЛАЛ НЕ ТАК!",
+    IGUI_KnoxEvent_Speech_FriendlyFireMeleeWeapon_03 = "Смотри куда бьешь!",
+    IGUI_KnoxEvent_Speech_FriendlyFireMeleeWeapon_04 = "Идиот! Смотри куда бьешь!!!",
+    IGUI_KnoxEvent_Speech_FriendlyFireMeleeWeapon_05 = "Долбоёб!",
+    IGUI_KnoxEvent_Speech_FriendlyFireMeleeWeapon_06 = "Что за хуйня?!",
+    IGUI_KnoxEvent_Speech_FriendlyFireMeleeWeapon_07 = "это ТЫ меня только ЧТО УДАРИЛ?!",
+    IGUI_KnoxEvent_Speech_FriendlyFireMeleeWeapon_08 = "КАКОГО ХУЯ ТЫ ДЕЛАЕШЬ?!",
+
+    IGUI_KnoxEvent_Speech_ScavengeMissionStart_01 = "По-собирать всякий хлам? Я скоро вернусь.",
+    IGUI_KnoxEvent_Speech_ScavengeMissionStart_02 = "Как хочешь. Просто не забывай обо мне.",
+    IGUI_KnoxEvent_Speech_ScavengeMissionStart_03 = "Я возьму столько сколько смогу.",
+    IGUI_KnoxEvent_Speech_ScavengeMissionStart_04 = "Могло быть и хуже.",
+    IGUI_KnoxEvent_Speech_ScavengeMissionStart_05 = "Могло быть и хуже. Скоро вернусь.",
+    IGUI_KnoxEvent_Speech_ScavengeMissionStart_06 = "Ээ...",
+    IGUI_KnoxEvent_Speech_ScavengeMissionStart_07 = "Хорошо, ладно.",
+
+    IGUI_KnoxEvent_Speech_ScavengeMissionStartAtNight_01 = "Ночью? Не уверен что это хорошая идея, но ладно.",
+    IGUI_KnoxEvent_Speech_ScavengeMissionStartAtNight_02 = "Ты будешь должить мне.",
+    IGUI_KnoxEvent_Speech_ScavengeMissionStartAtNight_03 = "Ну... Надеюсь зомбоиды сейчас спят.",
+    IGUI_KnoxEvent_Speech_ScavengeMissionStartAtNight_04 = "Ага, легко. Хорошая тренировка.",
+    IGUI_KnoxEvent_Speech_ScavengeMissionStartAtNight_05 = "Я имел в виду-... Ладно, я могу это сделать.",
+
+    IGUI_KnoxEvent_Speech_GroupUpWithPlayer_01 = "Конечно. Давай сгруппироемся.",
+    IGUI_KnoxEvent_Speech_GroupUpWithPlayer_02 = "Хорошо, пошли.",
+    IGUI_KnoxEvent_Speech_GroupUpWithPlayer_03 = "Куда идти?.",
+    IGUI_KnoxEvent_Speech_GroupUpWithPlayer_04 = "Да, пожалуйста!",
+    IGUI_KnoxEvent_Speech_GroupUpWithPlayer_05 = "Хмм... Ладно, хорошо.",
+    IGUI_KnoxEvent_Speech_GroupUpWithPlayer_06 = "Конечно, ты лидер как я думаю.",
+
+    IGUI_KnoxEvent_Speech_Help_01 = "Дерьмо! ПОМОГИТЕ МНЕ!",
+    IGUI_KnoxEvent_Speech_Help_02 = "КТО НИБУДЬ! СПАСИТЕ!",
+    IGUI_KnoxEvent_Speech_Help_03 = "ПОМОГИТЕ МНЕ!",
+    IGUI_KnoxEvent_Speech_Help_04 = "НЕТ! ПРОШУ! КТО-НИБУДЬ, ПОМОГИТЕ МНЕ!",
+    IGUI_KnoxEvent_Speech_Help_05 = "КТО-ЛИБО! ПОЖАЛУЙСТА!",
+    IGUI_KnoxEvent_Speech_Help_06 = "ПОЖАЛУЙСТА! НЕ НАДО!!!",
+    IGUI_KnoxEvent_Speech_Help_07 = "БЛЯДЬ! НЕЕТ!!!",
+    IGUI_KnoxEvent_Speech_Help_08 = "ПОЖАЛУЙСТА!!!",
+    IGUI_KnoxEvent_Speech_Help_09 = "ПОМОГИТЕ!",
+
+    IGUI_KnoxEvent_Speech_GroupUpWithPlayerDislikeLeader_01 = "Конечно. Давай сгруппироемся.",
+
+	IGUI_KnoxEvent_Speech_GroupUpWithPlayerDecline_01 = "У меня уже есть группа.",
+    IGUI_KnoxEvent_Speech_GroupUpWithPlayerDecline_02 = "Нет. Прости.",
+    IGUI_KnoxEvent_Speech_GroupUpWithPlayerDecline_03 = "Я предпочту не сейчас.",
+
+	IGUI_KnoxEvent_Speech_GroupUpWithPlayerLoner_01 = "Я предпочту быть одному.",
+    IGUI_KnoxEvent_Speech_GroupUpWithPlayerLoner_02 = "Я думаю, мне легче быть одному.",
+    IGUI_KnoxEvent_Speech_GroupUpWithPlayerLoner_03 = "Я не ищу друзей, сейчас.",
+
+    IGUI_KnoxEvent_Speech_StartFollowing_01 = "Хорошо, куда идём?",
+    IGUI_KnoxEvent_Speech_StartFollowing_02 = "Конечно.",
+
+    IGUI_KnoxEvent_Speech_FollowOnlyWithPlayerNoCombat_01 = "Тск, Тск Тск.",
+
+    IGUI_KnoxEvent_Speech_Greet_01 = "Привет.",
+    IGUI_KnoxEvent_Speech_Greet_02 = "Эй.",
+    IGUI_KnoxEvent_Speech_Greet_03 = "А? Как дела?",
+    IGUI_KnoxEvent_Speech_Greet_04 = "Что там?",
+    IGUI_KnoxEvent_Speech_Greet_05 = "М?",
+    IGUI_KnoxEvent_Speech_Greet_06 = "Что хочешь?",
+    IGUI_KnoxEvent_Speech_Greet_07 = "Привет.",
+    IGUI_KnoxEvent_Speech_Greet_08 = "Хочешь поговорить?",
+    IGUI_KnoxEvent_Speech_Greet_09 = "Что нужно?",
+    IGUI_KnoxEvent_Speech_Greet_10 = "...",
+
+    IGUI_KnoxEvent_Speech_Bye_01 = "Пока.",
+    IGUI_KnoxEvent_Speech_Bye_02 = "До-встречи тогда.",
+    IGUI_KnoxEvent_Speech_Bye_03 = "До-встречи.",
+    IGUI_KnoxEvent_Speech_Bye_04 = "Хорошо.",
+    IGUI_KnoxEvent_Speech_Bye_05 = "Ладно?...",
+    IGUI_KnoxEvent_Speech_Bye_06 = "Это все?",
+    IGUI_KnoxEvent_Speech_Bye_07 = "Увидимся.",
+    IGUI_KnoxEvent_Speech_Bye_08 = "Увидимся, позже.",
+    IGUI_KnoxEvent_Speech_Bye_09 = "Увидимся когда-нибудь.",
+    IGUI_KnoxEvent_Speech_Bye_10 = "...",
+
+    IGUI_KnoxEvent_Speech_NeedItem_01 = "Ну, если ты хочешь мне помочь то я не против",
+    IGUI_KnoxEvent_Speech_NeedItem_02 = "Хмм.. Мне оно очень надо",    
+    IGUI_KnoxEvent_Speech_NeedItem_03 = "Ну ты можешь дать мне",
+    IGUI_KnoxEvent_Speech_NeedItem_04 = "Нужно",    
+    IGUI_KnoxEvent_Speech_NeedItem_05 = "Можешь мне дать",    
+    IGUI_KnoxEvent_Speech_NeedItem_06 = "Можешь по-искать мне",
+    IGUI_KnoxEvent_Speech_NeedItem_07 = "Мне нужно только",   
+    IGUI_KnoxEvent_Speech_NeedItem_08 = "Можешь дать мне",
+    IGUI_KnoxEvent_Speech_NeedItem_09 = "Мне очень нужно",    
+    IGUI_KnoxEvent_Speech_NeedItem_10 = "Мне очень-очень нужно",    
+    IGUI_KnoxEvent_Speech_NeedItem_11 = "Что на-счёт того, что ты мне дашь",
+    IGUI_KnoxEvent_Speech_NeedItem_12 = "Дашь",     
+
+    IGUI_KnoxEvent_Speech_Thanks_01 = "Ну.. Спасибо тебе большое!",
+    IGUI_KnoxEvent_Speech_Thanks_02 = "О боже! Спасибо тебе!",
+    IGUI_KnoxEvent_Speech_Thanks_03 = "Спасибо тебе за это.",
+    IGUI_KnoxEvent_Speech_Thanks_04 = "Я очень благодарю за помощь.",
+    IGUI_KnoxEvent_Speech_Thanks_05 = "У меня должок за это. Спасибо, серьёзно.",
+    IGUI_KnoxEvent_Speech_Thanks_06 = "Спасибо за это!",
+    IGUI_KnoxEvent_Speech_Thanks_07 = "Спасибо!",
+    IGUI_KnoxEvent_Speech_Thanks_08 = "Я это запомню, спасибо.",
+    IGUI_KnoxEvent_Speech_Thanks_09 = "Спасибо.",
+    IGUI_KnoxEvent_Speech_Thanks_10 = "Спасибо за это.",
+    IGUI_KnoxEvent_Speech_Thanks_11 = "Я благодарю тебе за это.",
+    IGUI_KnoxEvent_Speech_Thanks_12 = "Я благодарен, спасибо.",
+
+    IGUI_KnoxEvent_Speech_BackgroundUnemployed_01 = "Я безработен. Я просто доволен собой, Теперь я могу больше радоваться.",
+    IGUI_KnoxEvent_Speech_BackgroundUnemployed_02 = "Я без работы, я даже не знаю что я делаю.",
+    IGUI_KnoxEvent_Speech_BackgroundUnemployed_03 = "До апокалипсиса, я просто радовался жизни. Что ты еще хочешь?",
+    IGUI_KnoxEvent_Speech_BackgroundUnemployed_04 = "До этого всего, я просто радовался своей жизни.",
+
+    IGUI_KnoxEvent_Speech_BackgroundPoliceOfficer_01 = "Как бы сказать... Я был раньше полицейским, до всего этого.",
+    IGUI_KnoxEvent_Speech_BackgroundPoliceOfficer_02 = "До апокалипсиса, я был офицером. Я мог пойти драться, но я выбрал остаться со семьей.",
+    IGUI_KnoxEvent_Speech_BackgroundPoliceOfficer_03 = "Я был полицейским. Теперь этот опыт мне очень нужен.",
+
+    IGUI_KnoxEvent_Speech_BackgroundParkRanger_01 = "Если ты ОЧЕНЬ хочешь знать, то я работал рейнджером. Я пожалуй по-кончу со всем этим, и перееду в лес.",
+    IGUI_KnoxEvent_Speech_BackgroundParkRanger_02 = "Я был рейнджером. Скучновато работать на такой работе.",
+    IGUI_KnoxEvent_Speech_BackgroundParkRanger_03 = "Я рейнджером был, я должен еще что-то сказать?",
+
+    IGUI_KnoxEvent_Speech_BackgroundSecurityGuard_01 = "Я был охранником.. хмм.",
+    IGUI_KnoxEvent_Speech_BackgroundSecurityGuard_02 = "Ну, я был охранником. Это все.",
+    IGUI_KnoxEvent_Speech_BackgroundSecurityGuard_03 = "Я могу сказать тебе одно, я был охранником.",
+
+    IGUI_KnoxEvent_Speech_BackgroundCarpenter_01 = "Я плотник. Как минимум, мне не нужно тырить мебель с магазинов.",
+    IGUI_KnoxEvent_Speech_BackgroundCarpenter_02 = "Я был плотником, если тебе нужно построить убежище - Вот, я здесь.",
+    IGUI_KnoxEvent_Speech_BackgroundCarpenter_03 = "Я был плотником, я не знаю что еще сказать...",
+
+    IGUI_KnoxEvent_Speech_BackgroundBurglar_01 = "Я лучше промолчу.",
+    IGUI_KnoxEvent_Speech_BackgroundBurglar_02 = "Я был взломщиком, я тебя не осудю если ты меня будешь ненавидеть.",
+
+    IGUI_KnoxEvent_Speech_BackgroundConstruction_01 = "Я работал на постройках. Я хотя-бы умею строить.",
+    IGUI_KnoxEvent_Speech_BackgroundConstruction_02 = "Раньше до апокалипсиса, я был строителем. Скучно, да?",
+    IGUI_KnoxEvent_Speech_BackgroundConstruction_03 = "Я? Я работал на постройках.. Строил...",
+
+    IGUI_KnoxEvent_Speech_BackgroundFireOfficer_01 = "Я был пожарником, я скучаю по старым вещам но я хотябы подготовлен под некоторые ситуации.",
+    IGUI_KnoxEvent_Speech_BackgroundFireOfficer_02 = "Я был пожарным. Довольно много чего объяснил, правда?",
+    IGUI_KnoxEvent_Speech_BackgroundFireOfficer_03 = "Я был пожарным. Спасать людей, скорее всего, была моя единственная задача.",
+    IGUI_KnoxEvent_Speech_BackgroundFireOfficer_04 = "До того, как все это произошло я был пожарным.",
+
+    IGUI_KnoxEvent_Speech_BackgroundLumberjack_01 = "Я был лесорубом, я знаю 1 вещь.. Или две...",
+    IGUI_KnoxEvent_Speech_BackgroundLumberjack_02 = "До апокалипсиса, я был лесорубом. Это все, ага.",
+    IGUI_KnoxEvent_Speech_BackgroundLumberjack_03 = "Я лесорубщиком был, до апокалипсиса..",
+
+    IGUI_KnoxEvent_Speech_BackgroundElectrican_01 = "Я был электриком, раньше. Свет не будет вечным, хорошая идея запастись бензином.",
+    IGUI_KnoxEvent_Speech_BackgroundElectrican_02 = "Я был электриком, до апокалипсиса, ты знаешь. Генераторы, это все такое.",
+
+    IGUI_KnoxEvent_Speech_BackgroundMechanic_01 = "Я механик. Если тебе нужно, мы сделаем договор и я починю твою тачку.",
+    IGUI_KnoxEvent_Speech_BackgroundMechanic_02 = "До всего этого, я убежал из моей мастерской. Было весело.",
+    IGUI_KnoxEvent_Speech_BackgroundMechanic_03 = "Я был механиком, до-сих пор полезно. Кто не хочет машины в апокалипсисе то?",
+
+    IGUI_KnoxEvent_Speech_BackgroundVeteran_01 = "Я ветеран. Я волнуюсь с тем что происходит с армией сейчас...",
+    IGUI_KnoxEvent_Speech_BackgroundVeteran_02 = "До всего этого я был в армии.",
+
+    IGUI_KnoxEvent_Speech_BackgroundNurse_01 = "Ну, я был медбратом/медсестрой, и я думаю я был счастливчиком.",
+    IGUI_KnoxEvent_Speech_BackgroundNurse_02 = "До того как все это произошло я был медбратом/медсестрой, я люблю помогать людям.",
+
+    IGUI_KnoxEvent_Speech_BackgroundDoctor_01 = "У меня опыт доктора. В эти времена люди нуждаются обо мне больше всего. Но помогаю я не бесплатно.",
+    IGUI_KnoxEvent_Speech_BackgroundDoctor_02 = "Я был доктором. Теперь обо мне нуждаются еще сильнее.",
+    IGUI_KnoxEvent_Speech_BackgroundDoctor_03 = "До того как все произошло я был доктором.",
+    IGUI_KnoxEvent_Speech_BackgroundDoctor_04 = "Я был доктором до апокалипсиса. Это всегда было полезно иметь такие знания, Это-же важно все-же.",
+
+    IGUI_KnoxEvent_Player_Speech_Aggressive = "Давайте просто успокоимся...",
+    IGUI_KnoxEvent_Player_Speech_Passive = "Не берите заложников!",
+    IGUI_KnoxEvent_Player_Speech_Fight = "Удержаем позиции и сражаемся!",
+    IGUI_KnoxEvent_Player_Speech_Retreat = "Отступаем!",
+    IGUI_KnoxEvent_Player_Speech_SpeechSmallTalk = "Ужасную погодку мы имели, да?",
+    IGUI_KnoxEvent_Player_Speech_SpeechAskBackstory = "Что ты делал до того как все это произошло?",
+    IGUI_KnoxEvent_Player_Speech_SpeechGoodbye = "Ну, увидимся",
+    IGUI_KnoxEvent_Player_Speech_NpcGroupAskJoin = "Хочешь в группу?",
+    IGUI_KnoxEvent_Player_Speech_NpcGroupKick = "Я думаю нам нужно увидеть других людей",
+    IGUI_KnoxEvent_Player_Speech_SafehouseClaimSuccess = "Прекрасный новый домик.",
+    IGUI_KnoxEvent_Player_Speech_SafehouseClaimFail = "Не могу сделать это своим убежищем.",
+    IGUI_KnoxEvent_Player_Speech_SafehouseRelease = "К новым приключениям",
+
+    IGUI_KnoxEvent_Looting_Category_Ammo = "Патроны",
+    IGUI_KnoxEvent_Looting_Category_FirstAid = "Первая помощь",
+    IGUI_KnoxEvent_Looting_Category_Food = "Еда",
+    IGUI_KnoxEvent_Looting_Category_Guns = "Пушки",
+    IGUI_KnoxEvent_Looting_Category_Materials = "Материалы",
+    IGUI_KnoxEvent_Looting_Category_Tools = "Инструменты",
+    IGUI_KnoxEvent_Looting_Category_Water = "Вода",
+    IGUI_KnoxEvent_Looting_Category_Weapons = "Оружие",
+
+    IGUI_KnoxEvent_Npc_Stance_Hostile = "Состояние НПС: Агрессивен",
+    IGUI_KnoxEvent_Npc_Stance_Neutral = "Состояние НПС: Нейтрал",
+
+    IGUI_KnoxEvent_Npc_Retreat = "Отступить",
+    IGUI_KnoxEvent_Npc_Fight = "Атаковать",
+
+    IGUI_KnoxEvent_Npc_Task_ChopTrees = "Рубить деревья",
+    IGUI_KnoxEvent_Npc_Task_CorpseClear = "Взять трупы",
+    IGUI_KnoxEvent_Npc_Task_CorpseDump = "Выкинуть трупы",
+    IGUI_KnoxEvent_Npc_Task_Guard = "Охранять",
+
+    IGUI_KnoxEvent_NpcOverview_Col_Name = "Имя",
+    IGUI_KnoxEvent_NpcOverview_Col_Task = "Задача",
+    IGUI_KnoxEvent_NpcOverview_Col_Subtask = "Доп. Задача",
+    IGUI_KnoxEvent_NpcOverview_Col_Relation = "Репутация",
+    IGUI_KnoxEvent_NpcOverview_Remove_Button = "Удалить",
+
+    IGUI_KnoxEvent_NpcOverview_Sel_ChopTreesArea = "Установить место для рубки деревьев",
+    IGUI_KnoxEvent_NpcOverview_Sel_ClearCorpsesArea = "Установить место для взятия трупов",
+    IGUI_KnoxEvent_NpcOverview_Sel_DumpCorpsesArea = "Установить место для выкидывания трупов",
+    IGUI_KnoxEvent_NpcOverview_Sel_GuardArea = "Установить место охраны",
+
+   IGUI_KnoxEvent_Npc_AreaSelect = "Выбрать место",
+    IGUI_KnoxEvent_Npc_AreaRemove = "Закрыть",
+    IGUI_KnoxEvent_Npc_AreaClose = "Закрыть",
+
+    IGUI_KnoxEvent_Npc_Dialogue_SmallTalk = "Небольшой разговор",
+    IGUI_KnoxEvent_Npc_Dialogue_Background = "Что ты делал, до того как все это произошло?",
+    IGUI_KnoxEvent_Npc_Dialogue_Leave = "Уйти",
+
+    IGUI_KnoxEvent_Player_Speech_DialogueIgnore = "Я не хочу говорить с тобой",
+    IGUI_KnoxEvent_Player_Speech_DialogueSmallTalkResponse1 = "Мгм, погода была такой себе",
+
+    IGUI_KnoxEvent_Player_Speech_Annoyed1 = "Перестань спрашивать. Ты достаешь меня.",
+
+    IGUI_KnoxEvent_Npc_Dialogue_AskToJoinGroup = "Попросить зайти в группу",
+
+    IGUI_KnoxEvent_Npc_Dialogue_Background = "Спросить об прошлом",
+    IGUI_KnoxEvent_Npc_Dialogue_AskAboutRecent = "Спросить об недавних новостях",
+    IGUI_KnoxEvent_Npc_Dialogue_Back = "Назад",
+
+    IGUI_KnoxEvent_Npc_Dialogue_SmallTalkWeather = "Поговорить об погоде",
+    IGUI_KnoxEvent_Npc_Dialogue_SmallTalkAge = "Сколько тебе лет?",
+    IGUI_KnoxEvent_Npc_Dialogue_SmallTalkOccupation = "Что ты делал до апокалипсиса?",
+
+    IGUI_KnoxEvent_Player_Speech_SpeechRecent = "Что-то произошло недавно?",
+
+    IGUI_KnoxEvent_Speech_BackgroundFarmer_01 = "Я был фермером. Это не так много, но это честная работа.",
+
+    IGUI_KnoxEvent_Speech_BackgroundFisherman_01 = "Я был рыбаком. Я.. скучаю по шуму моря..."
+
+    IGUI_KnoxEvent_Speech_BackgroundMetalworker_01 = "Я был металлообработчиком. Сварка заборов была моим коньком."
+
+    IGUI_KnoxEvent_Speech_BackgroundUnemployed_05 = "Я был.. Ээ.. Нууу.. Такой себе работе.",
+
+    IGUI_KnoxEvent_Speech_BackgroundBurgerFlipper_01 = "Я работал в фаст-фуде. Ничё особенного, но можно сказать что тебе это все нравилось.",
+
+    IGUI_KnoxEvent_Speech_BackgroundEngineer_01 = "Я был инженером. Я, если честно, достаточно много работал здесь.",
+
+    IGUI_KnoxEvent_Speech_BackgroundFitnessInstructor_01 = "Я был фитнес инструктером. Ты бы не хотел видеть, как я заставлял людей потеть.",
+
+    IGUI_KnoxEvent_Speech_BackgroundRepairman_01 = "Я был ремотником. У меня был бизнес по тому, как я чинил посудомойки",
+}

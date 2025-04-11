@@ -1,0 +1,45 @@
+
+
+Sandbox_RU = {
+
+    /***** GENERAL *****/
+    Sandbox_KnoxEventExpanded_General = "Knox Event Expanded: Общее"
+
+    Sandbox_KnoxEventExpanded.InitSpawn = "появление НПС ( В некоторых ) ячейках при старте сервера"
+    Sandbox_KnoxEventExpanded.PercentageLoners = "Процент того, что НПС будут одиночками"
+    Sandbox_KnoxEventExpanded.TotalNbrOfNpcs = "Число спавна НПС"
+    Sandbox_KnoxEventExpanded.MeleeDamageHitMultiplier = "Множитель урона ближнего боя против НПС"
+    Sandbox_KnoxEventExpanded.RangedDamageHitMultiplier = "Множитель урона дальнего боя против НПС"
+    Sandbox_KnoxEventExpanded.OnlyTorsoInjuries = "Все ранения, против НПС, будут идти в торс"
+    Sandbox_KnoxEventExpanded.MeleeMissChance = "Шанс того, что НПС промахнется при атаке"
+
+
+    Sandbox_KnoxEventExpanded.SpawnLouisville = "Появление НПС в Louisville"
+    Sandbox_KnoxEventExpanded.SpawnValleyStation = "Появление НПС в Valley Station"
+    Sandbox_KnoxEventExpanded.SpawnWestPoint = "Появление НПС в WestPoint"
+    Sandbox_KnoxEventExpanded.SpawnMuldraugh = "Появление НПС в Muldraugh"
+    Sandbox_KnoxEventExpanded.SpawnDoeValley = "Появление НПС в Doe Valley"
+    Sandbox_KnoxEventExpanded.SpawnMarchRidge = "Появление НПС в March Ridge"
+    Sandbox_KnoxEventExpanded.SpawnFallasLake = "Появление НПС в Fallas Lake"
+    Sandbox_KnoxEventExpanded.SpawnDixieMobilePark = "Появление НПС в Dixie Mobile Park"
+    Sandbox_KnoxEventExpanded.SpawnScenicGroveMobilePark = "Появление НПС в Grove Mobile Park"
+    Sandbox_KnoxEventExpanded.SpawnRiverSide = "Появление НПС в Riverside"
+
+
+    Sandbox_KnoxEventExpanded.BanditAttackNpcsChance = "Шанс того, что бандиты атакуют НПС"
+    Sandbox_KnoxEventExpanded.BanditSafehouseAttacks = "Бандиты будут рандомно атаковать базы игроков"
+    Sandbox_KnoxEventExpanded.BanditAttackRisk = "Риск быть атакованным бандитами ( Тикает каждый час )"
+    Sandbox_KnoxEventExpanded.BanditAttackMixNumberInterval = "Мин. Количество бандитов при рейде"
+    Sandbox_KnoxEventExpanded.BanditAttackMaxNumberInterval = "Макс. Количество бандитов при рейде"
+    Sandbox_KnoxEventExpanded.BanditSafehouseAttacksWithGuns = "Бандиты могут быть вооружены огнестрельным оружием"
+
+    Sandbox_KnoxEventExpanded_Debug = "Knox Event Expanded: Режим разработчика"
+
+    Sandbox_KnoxEventExpanded.MilitaryIgnorePlayerFactions = "Список фракций игроков, которые военные будут считать дружественными, через запятую"
+	Sandbox_KnoxEventExpanded.MilitaryCurfewPatrols = "Включить комендатский час, в время которого военные будут патрулировать"
+
+    Sandbox_KnoxEventExpanded.NpcPVPAlwaysOn = "(MP) У нпс будет всегда ПВП режим"
+    Sandbox_KnoxEventExpanded.NpcEnableHunger = "НПС будут становиться голодными, и им нужно будет кушать"
+    Sandbox_KnoxEventExpanded.NpcEnableThirst = "НПС будут хотеть пить, и им прийдется питьь"
+    Sandbox_KnoxEventExpanded.NpcEnableEndurance = "НПС Могут уставать, и им нужно отдыхать"
+}

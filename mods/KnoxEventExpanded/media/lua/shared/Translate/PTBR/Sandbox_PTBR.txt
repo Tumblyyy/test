@@ -1,0 +1,30 @@
+Sandbox_PTBR = {
+
+    /***** GENERAL *****/
+    Sandbox_KnoxEventExpanded_General = "Knox Event Expanded General"
+
+    Sandbox_KnoxEventExpanded.InitSpawn = "Gera Npcs em (algumas) c�lulas ao iniciar o servidor"
+    Sandbox_KnoxEventExpanded.PercentageLoners = "Porcentagem de Npcs que ser�o solit�rios"
+    Sandbox_KnoxEventExpanded.TotalNbrOfNpcs = "N�mero total de Npcs para gerar"
+    Sandbox_KnoxEventExpanded.MeleeDamageHitMultiplier = "Multiplicador de dano para ataques corpo a corpo contra Npcs"
+    Sandbox_KnoxEventExpanded.RangedDamageHitMultiplier = "Multiplicador de dano para ataques � dist�ncia contra Npcs""
+
+    Sandbox_KnoxEventExpanded.SpawnLouisville = "Gerar Npcs em Louisville"
+    Sandbox_KnoxEventExpanded.SpawnValleyStation = "Gerar Npcs em Valley Station"
+    Sandbox_KnoxEventExpanded.SpawnWestPoint = "Gerar Npcs em WestPoint"
+    Sandbox_KnoxEventExpanded.SpawnMuldraugh = "Gerar Npcs em Muldraugh"
+    Sandbox_KnoxEventExpanded.SpawnDoeValley = "Gerar Npcs em Doe Valley"
+    Sandbox_KnoxEventExpanded.SpawnMarchRidge = "Gerar Npcs em March Ridge"
+    Sandbox_KnoxEventExpanded.SpawnFallasLake = "Gerar Npcs em Fallas Lake"
+    Sandbox_KnoxEventExpanded.SpawnDixieMobilePark = "Gerar Npcs em Dixie Mobile Park"
+    Sandbox_KnoxEventExpanded.SpawnScenicGroveMobilePark = "Gerar Npcs em Grove Mobile Park"
+    Sandbox_KnoxEventExpanded.SpawnRiverSide = "Gerar Npcs em Riverside"
+
+
+    Sandbox_KnoxEventExpanded.BanditAttackNpcsChance = "Chance de Bandidos atacar NPCs aleatoriamente"
+    Sandbox_KnoxEventExpanded.BanditSafehouseAttacks = "Chance de Bandidos atacar aleatoriamente esconderijos de jogadores"
+    Sandbox_KnoxEventExpanded.BanditAttackRisk = "Risco de ataque de bandidos (tentativas a cada hora)"
+    Sandbox_KnoxEventExpanded.BanditAttackMinNumberInterval = "N�mero m�nimo de bandidos gerados por ataque"
+    Sandbox_KnoxEventExpanded.BanditAttackMaxNumberInterval = "N�mero m�ximo de bandidos gerados por ataque"
+
+}

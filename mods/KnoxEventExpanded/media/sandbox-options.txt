@@ -1,0 +1,178 @@
+VERSION = 1,
+
+/***** GENERAL *****/
+
+option KnoxEventExpanded.Debug_EnableLateFramePrint = {
+    type = boolean, default = false,
+    page = KnoxEventExpanded_Debug, translation = KnoxEventExpanded.Debug_EnableLateFramePrint,
+}
+
+option KnoxEventExpanded.Debug_EnableNpcLongUpdatePrint = {
+    type = boolean, default = false,
+    page = KnoxEventExpanded_Debug, translation = KnoxEventExpanded.Debug_EnableNpcLongUpdatePrint,
+}
+
+option KnoxEventExpanded.Debug_EnableNpcUnstuckPrint = {
+    type = boolean, default = false,
+    page = KnoxEventExpanded_Debug, translation = KnoxEventExpanded.Debug_EnableNpcUnstuckPrint,
+}
+
+option KnoxEventExpanded.General_InitSpawn = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.InitSpawn,
+}
+
+option KnoxEventExpanded.General_PercentageLoners = {
+    type = double, min = 0, max = 100.0, default = 20.0,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.PercentageLoners,
+}
+
+option KnoxEventExpanded.General_TotalNbrOfNpcs = {
+    type = integer, min = 0, max = 10000, default = 1000,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.TotalNbrOfNpcs,
+}
+
+option KnoxEventExpanded.General_NpcPVPAlwaysOn = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.NpcPVPAlwaysOn,
+}
+
+option KnoxEventExpanded.General_NpcEnableHunger = {
+    type = boolean, default = false,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.NpcEnableHunger,
+}
+
+option KnoxEventExpanded.General_NpcEnableThirst = {
+    type = boolean, default = false,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.NpcEnableThirst,
+}
+
+option KnoxEventExpanded.General_NpcEnableEndurance = {
+    type = boolean, default = false,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.NpcEnableEndurance,
+}
+
+option KnoxEventExpanded.General_MeleeMissChance = {
+    type = double, min = 0, max = 100, default = 25.0,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.MeleeMissChance,
+}
+
+option KnoxEventExpanded.General_OnlyTorsoInjuries = {
+    type = boolean, default = false,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.OnlyTorsoInjuries,
+}
+
+option KnoxEventExpanded.General_MeleeDamageHitMultiplier = {
+    type = double, min = 0, max = 300, default = 50.0,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.MeleeDamageHitMultiplier,
+}
+
+option KnoxEventExpanded.General_RangedDamageHitMultiplier = {
+    type = double, min = 0, max = 300, default = 70.0,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.RangedDamageHitMultiplier,
+}
+
+option KnoxEventExpanded.General_BanditAttackNpcsChance {
+    type = double, min = 0, max = 100, default = 10,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.BanditAttackNpcsChance,
+}
+
+option KnoxEventExpanded.General_SpawnLegacy = {
+    type = boolean, default = false,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.SpawnLegacy,
+}
+
+option KnoxEventExpanded.General_SpawnLouisville = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.SpawnLouisville,
+}
+
+option KnoxEventExpanded.General_SpawnValleyStation = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.SpawnValleyStation,
+}
+
+option KnoxEventExpanded.General_SpawnWestPoint = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.SpawnWestPoint,
+}
+
+option KnoxEventExpanded.General_SpawnMuldraugh = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.SpawnMuldraugh,
+}
+
+option KnoxEventExpanded.General_SpawnDoeValley = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.SpawnDoeValley,
+}
+
+option KnoxEventExpanded.General_SpawnRiverSide = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.SpawnRiverSide,
+}
+
+option KnoxEventExpanded.General_SpawnRoseWood = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.SpawnRoseWood,
+}
+
+option KnoxEventExpanded.General_SpawnMarchRidge = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.SpawnMarchRidge,
+}
+
+option KnoxEventExpanded.General_SpawnFallasLake = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.SpawnFallasLake,
+}
+
+option KnoxEventExpanded.General_SpawnDixieMobilePark = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.SpawnDixieMobilePark,
+}
+
+option KnoxEventExpanded.General_SpawnScenicGroveMobilePark = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.SpawnScenicGroveMobilePark,
+}
+
+option KnoxEventExpanded.General_BanditSafehouseAttacks = {
+    type = boolean, default = true,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.BanditSafehouseAttacks,
+}
+
+option KnoxEventExpanded.General_BanditSafehouseAttacksWithGuns = {
+    type = boolean, default = false,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.BanditSafehouseAttacksWithGuns,
+}
+
+option KnoxEventExpanded.General_BanditAttackRiskDay {
+    type = double, min = 0, max = 1000, default = 1,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.BanditAttackRiskDay,
+}
+
+option KnoxEventExpanded.General_BanditAttackRiskNight {
+    type = double, min = 0, max = 1000, default = 2,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.BanditAttackRiskNight,
+}
+
+option KnoxEventExpanded.General_BanditAttackMinNumberInterval {
+    type = integer, min = 0, max = 10, default = 1,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.BanditAttackMinNumberInterval,
+}
+
+option KnoxEventExpanded.General_BanditAttackMaxNumberInterval {
+    type = integer, min = 0, max = 10, default = 3,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.BanditAttackMaxNumberInterval,
+}
+
+option KnoxEventExpanded.General_MilitaryIgnorePlayerFactions {
+    type = string, default = '',
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.MilitaryIgnorePlayerFactions,
+}
+
+option KnoxEventExpanded.General_MilitaryCurfewPatrols {
+    type = boolean, default = false,
+    page = KnoxEventExpanded_General, translation = KnoxEventExpanded.MilitaryCurfewPatrols,
+}

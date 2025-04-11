@@ -1,0 +1,16 @@
+ContextMenu_EN = {
+    ContextMenu_KnoxEvent_Barricade = "Баррикадировать",
+    ContextMenu_KnoxEvent_ChopTrees = "Рубить деревья",
+    ContextMenu_KnoxEvent_DumpCorpses = "Выкинуть трупы",
+    ContextMenu_KnoxEvent_DumpLoot = "Выкинуть лут",
+    ContextMenu_KnoxEvent_Follow = "Следовать",
+    ContextMenu_KnoxEvent_Stay = "Стоять",
+    ContextMenu_KnoxEvent_Guard = "Охранять",
+    ContextMenu_KnoxEvent_Rest = "Отдыхать",
+    ContextMenu_KnoxEvent_Settings = "Настройки",
+    ContextMenu_KnoxEvent_AskToJoinGroup = "Попросить вступить в группу",
+    ContextMenu_KnoxEvent_LootBuilding = "Лутать здание",
+    ContextMenu_KnoxEvent_OpenInventory = "Открыть инвентарь НПС",
+    ContextMenu_KnoxEvent_Scavenge = "Исследовать местность",
+    ContextMenu_KnoxEvent_Speak = "Пообщаться",
+}

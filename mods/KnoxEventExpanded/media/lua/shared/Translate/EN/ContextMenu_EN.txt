@@ -1,0 +1,15 @@
+ContextMenu_EN = {
+    ContextMenu_KnoxEvent_Barricade = "Barricade",
+    ContextMenu_KnoxEvent_ChopTrees = "Chop trees",
+    ContextMenu_KnoxEvent_DumpCorpses = "Dump corpses",
+    ContextMenu_KnoxEvent_DumpLoot = "Dump loot",
+    ContextMenu_KnoxEvent_Follow = "Follow",
+    ContextMenu_KnoxEvent_Stay = "Stay",
+    ContextMenu_KnoxEvent_Guard = "Guard",
+    ContextMenu_KnoxEvent_Rest = "Rest",
+    ContextMenu_KnoxEvent_Settings = "Settings",
+    ContextMenu_KnoxEvent_LootBuilding = "Loot building",
+    ContextMenu_KnoxEvent_OpenInventory = "Open Npc inventory",
+    ContextMenu_KnoxEvent_Scavenge = "Scavenge area",
+    ContextMenu_KnoxEvent_Speak = "Speak",
+}

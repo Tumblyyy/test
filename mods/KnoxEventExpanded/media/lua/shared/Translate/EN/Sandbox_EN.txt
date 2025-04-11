@@ -1,0 +1,48 @@
+Sandbox_EN = {
+
+    /***** GENERAL *****/
+    Sandbox_KnoxEventExpanded_General = "Knox Event Expanded General"
+
+    Sandbox_KnoxEventExpanded.InitSpawn = "Spawn Npcs in (some) cells when starting server"
+    Sandbox_KnoxEventExpanded.PercentageLoners = "Perctange of Npcs who will be loners"
+    Sandbox_KnoxEventExpanded.TotalNbrOfNpcs = "Total number of Npcs to spawn"
+    Sandbox_KnoxEventExpanded.MeleeMissChance = "Miss chance for melee attacks by Npcs"
+    Sandbox_KnoxEventExpanded.OnlyTorsoInjuries = "All injuries to Npcs go against their torsos"
+    Sandbox_KnoxEventExpanded.MeleeDamageHitMultiplier = "Damage multiplier for melee attacks against Npcs"
+    Sandbox_KnoxEventExpanded.RangedDamageHitMultiplier = "Damage multiplier for ranged attacks against Npcs"
+    Sandbox_KnoxEventExpanded.BanditAttackNpcsChance = "Chance bandits will randomly attack npcs"
+
+    Sandbox_KnoxEventExpanded.SpawnLegacy = "Use legacy method where you select cells",
+    Sandbox_KnoxEventExpanded.SpawnLouisville = "Spawn Npcs in Louisville"
+    Sandbox_KnoxEventExpanded.SpawnValleyStation = "Spawn Npcs in Valley Station"
+    Sandbox_KnoxEventExpanded.SpawnWestPoint = "Spawn Npcs in WestPoint"
+    Sandbox_KnoxEventExpanded.SpawnMuldraugh = "Spawn Npcs in Muldraugh"
+    Sandbox_KnoxEventExpanded.SpawnDoeValley = "Spawn Npcs in Doe Valley"
+    Sandbox_KnoxEventExpanded.SpawnMarchRidge = "Spawn Npcs in March Ridge"
+    Sandbox_KnoxEventExpanded.SpawnFallasLake = "Spawn Npcs in Fallas Lake"
+    Sandbox_KnoxEventExpanded.SpawnDixieMobilePark = "Spawn Npcs in Dixie Mobile Park"
+    Sandbox_KnoxEventExpanded.SpawnScenicGroveMobilePark = "Spawn Npcs in Grove Mobile Park"
+    Sandbox_KnoxEventExpanded.SpawnRiverSide = "Spawn Npcs in Riverside"
+    Sandbox_KnoxEventExpanded.SpawnRoseWood = "Spawn Npcs in Rosewood"
+
+    Sandbox_KnoxEventExpanded.BanditSafehouseAttacks = "Bandits will randomly attack player safehouses"
+    Sandbox_KnoxEventExpanded.BanditSafehouseAttacksWithGuns = "Bandits will be armed with guns"
+    Sandbox_KnoxEventExpanded.BanditAttackRiskDay = "Risk of bandit attack during day (ticks every hour)"
+    Sandbox_KnoxEventExpanded.BanditAttackRiskNight = "Risk of bandit attack during night (ticks every hour)"
+    Sandbox_KnoxEventExpanded.BanditAttackMinNumberInterval = "Minimum number of spawned bandits per attack"
+    Sandbox_KnoxEventExpanded.BanditAttackMaxNumberInterval = "Maximum number of spawned bandits per attack"
+
+    Sandbox_KnoxEventExpanded.MilitaryIgnorePlayerFactions = "List of player factions that the military will consider friendly, separated with commas"
+    Sandbox_KnoxEventExpanded.MilitaryCurfewPatrols = "Enable military curfew patrols"
+
+    Sandbox_KnoxEventExpanded_Debug = "Knox Event Expanded Debug"
+
+    Sandbox_KnoxEventExpanded.Debug_EnableLateFramePrint = "Enable late frame prints for main thread"
+    Sandbox_KnoxEventExpanded.Debug_EnableNpcLongUpdatePrint = "Enable prints for npcs taking a long time to update"
+    Sandbox_KnoxEventExpanded.Debug_EnableNpcUnstuckPrint = "Enable prints for npcs getting unstuck when phasing in"
+
+    Sandbox_KnoxEventExpanded.NpcPVPAlwaysOn = "(MP) Npcs will always have PvP on"
+    Sandbox_KnoxEventExpanded.NpcEnableHunger = "Npcs will will become hungry and need to eat"
+    Sandbox_KnoxEventExpanded.NpcEnableThirst = "Npcs will will become thirsty and need to drink"
+    Sandbox_KnoxEventExpanded.NpcEnableEndurance = "Npcs will will become exhausted and need to rest"
+}
