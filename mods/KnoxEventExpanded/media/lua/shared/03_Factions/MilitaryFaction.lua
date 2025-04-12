@@ -24,6 +24,10 @@ local function assignDefendNorth(npc, index)
     npc:setSubGoal("");
     local tree = npc:getBehaviorTree();
     local defendSubTree = tree:getChildWithName("DefendSubTree");
+    if defendSubTree == nil then
+        -- TODO: Log here
+        return;
+    end
     local staySubTreeNode = defendSubTree:getChildWithName("StaySubTree");
     local stayMovementNode = staySubTreeNode:getChildWithName("MovementSubTree");
     stayMovementNode:setData("MovementSubTreeTargetX", tx);
@@ -67,8 +71,8 @@ local function assignDefendEast(npc, index)
         tx = 12574;
         ty = 4340;
     elseif index == 1 then
-        tx = 12577;
-        ty = 4340;
+        tx = 12578;
+        ty = 4341;
     elseif index == 2 then
         tx = 12574;
         ty = 4340;
