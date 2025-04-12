@@ -110,8 +110,9 @@ function QuestJournalUI:initialise()
 end
 
 -- Load quests from the QuestManager
-function QuestJournalUI:loadQuests()
-    local playerId = getSpecificPlayer(0):getPlayerNum()
+function QuestJournalUI:loadQuests(playerId)
+    if not playerId then return end -- Add a guard to make sure that a player id was passed
+    local player = getSpecificPlayer(playerId)
     
     -- Clear existing quests
     self.activeQuestsList:clear()
@@ -132,6 +133,10 @@ function QuestJournalUI:loadQuests()
         local questDef = QuestManager.getQuest(questId)
         if questDef then
             self.completedQuestsList:addItem(questDef.title, {questId = questId, questDef = questDef, questInstance = questInstance})
+        end
+    end
+    if not player then
+        return
         end
     end
     
@@ -325,14 +330,12 @@ function QuestJournalUI:update()
 end
 
 -- Toggle visibility of the journal
-function QuestJournalUI:toggleVisibility()
-    if self:getIsVisible() then
-        self:setVisible(false)
-    else
-        self:setVisible(true)
-        self:loadQuests()
-        self:bringToTop()
-    end
+function QuestJournalUI:toggleVisibility(playerId)
+	if not playerId then return end -- Add a guard to make sure that a player id was passed
+	self.visible = not self.visible
+	if self.visible then
+		self:loadQuests(playerId)
+	end
 end
 
 -- Create the journal instance
@@ -355,14 +358,16 @@ end
 Events.OnGameStart.Add(QuestJournalUI.createUI)
 
 -- Keybind to toggle journal visibility
-local function onKeyPressed(key)
-    if key == Keyboard.KEY_J and not isKeyDown(Keyboard.KEY_LCONTROL) and not isKeyDown(Keyboard.KEY_LSHIFT) then
-        if QuestJournalUI.instance then
-            QuestJournalUI.instance:toggleVisibility()
-        end
-    end
+local function onKeyPressed(key, pressed)
+	if not pressed then return end
+	if key == Keyboard.KEY_J and not isKeyDown(Keyboard.KEY_LCONTROL) and not isKeyDown(Keyboard.KEY_LSHIFT) then
+		local player = getSpecificPlayer(0)
+		if player and QuestJournalUI.instance then
+			QuestJournalUI.instance:toggleVisibility(player:getPlayerNum())
+		end
+	end
 end
 
-Events.OnKeyPressed.Add(onKeyPressed)
+Events.OnKeyPressed.Add(onKeyPressed) 
 
 return QuestJournalUI 

@@ -44,14 +44,13 @@ end
 local function checkEscortObjectives()
     for npcId, data in pairs(escortedNpcs) do
         -- Get the NPC
-        local npc = nil
-        if isClient() then
-            -- Multiplayer - get by online ID
-            npc = getPlayerByOnlineID(npcId)
-        else
-            -- Singleplayer - assumes getNpcById exists or similar function
-            npc = getNpcById and getNpcById(npcId) or nil
-        end
+        local npc
+        local npcId = data.npcId
+        npc = getPlayerByOnlineID(npcId)
+        if not npc then
+           npc = getNpcById and getNpcById(npcId) or nil
+        end 
+
         
         -- If NPC doesn't exist anymore, remove from tracking
         if not npc then

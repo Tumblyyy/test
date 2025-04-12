@@ -1,0 +1,24 @@
+package mods.KnoxEventExpanded.media.lua.shared.03_BehaviorTree.subtrees;
+
+import knox.event.utils.behaviortree.core.BehaviorNode;
+import knox.event.utils.behaviortree.core.SelectorNode;
+import knox.event.utils.behaviortree.core.SequenceNode;
+import mods.KnoxEventExpanded.media.lua.shared.03_BehaviorTree.actions.TalkToPlayerAction;
+import mods.KnoxEventExpanded.media.lua.shared.03_BehaviorTree.conditions.IsObjectiveActiveCondition;
+import mods.KnoxEventExpanded.media.lua.shared.03_BehaviorTree.conditions.IsObjectiveCompletedCondition;
+import zombie.characters.IsoGameCharacter;
+
+public class TalkSubTree extends BehaviorNode {
+    private IsoGameCharacter npc;
+
+    public TalkSubTree(IsoGameCharacter npc) {
+        this.npc = npc;
+        SelectorNode selector = new SelectorNode(npc);
+        SequenceNode sequence = new SequenceNode(npc);
+        sequence.addChild(new IsObjectiveActiveCondition(npc, "talk"));
+        sequence.addChild(new TalkToPlayerAction(npc, npc.getNpcPreset().partyID));
+        sequence.addChild(new IsObjectiveCompletedCondition(npc, "talk"));
+        selector.addChild(sequence);
+        this.addChild(selector);
+    }
+}

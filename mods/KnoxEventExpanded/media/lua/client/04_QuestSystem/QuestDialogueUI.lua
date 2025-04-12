@@ -143,30 +143,27 @@ function QuestDialogueUI:canCompleteQuest(playerId, questId)
     -- Get active quest data
     local questInstance = QuestManager.getActiveQuest(playerId, questId)
     if not questInstance then return false end
-    
     -- Check if all objectives are completed
     for _, objective in ipairs(questInstance.objectives) do
         if not objective.completed then
             return false
         end
     end
-    
     return true
 end
 
 function QuestDialogueUI:acceptQuest()
     local playerId = getSpecificPlayer(0):getPlayerNum()
     local player = getSpecificPlayer(playerId)
-    
-    -- Start the quest
+
+     -- Start the quest
     if QuestManager.startQuest(playerId, self.quest.id) then
         -- Update dialogue text to acceptance text
-        self.dialogueText = self.quest.dialogue.accept or "Quest accepted."
-        player:Say("I'll help you out.")
-        
+        self.dialogueText = self.quest.dialogue.accept or "Quest accepted."        
         -- Update state and options
         self.questState = "active"
         self:setQuest(self.quest, "active")
+        player:Say("I'll help you out.")
     else
         -- Failed to start quest
         self.dialogueText = "You already have this quest or there was an error starting it."
@@ -174,7 +171,9 @@ function QuestDialogueUI:acceptQuest()
 end
 
 function QuestDialogueUI:declineQuest()
+
     -- Update dialogue text to decline text
+
     self.dialogueText = self.quest.dialogue.decline or "Quest declined."
     getSpecificPlayer(0):Say("Sorry, I can't help with that right now.")
     
@@ -185,18 +184,16 @@ function QuestDialogueUI:declineQuest()
     end)
     self.closeAfterDelay = true
 end
-
 function QuestDialogueUI:completeQuest()
     local playerId = getSpecificPlayer(0):getPlayerNum()
     local player = getSpecificPlayer(playerId)
-    
-    -- Complete the quest
+     -- Complete the quest
     if QuestManager.completeQuest(playerId, self.quest.id) then
         -- Update dialogue text to completion text
         self.dialogueText = self.quest.dialogue.complete or "Quest completed."
-        player:Say("I've completed your task.")
-        
+
         -- Update state and options
+        player:Say("I've completed your task.")        
         self.questState = "complete"
         self:setQuest(self.quest, "complete")
     else
@@ -206,7 +203,7 @@ function QuestDialogueUI:completeQuest()
 end
 
 function QuestDialogueUI:askAboutQuest()
-    local playerId = getSpecificPlayer(0):getPlayerNum()
+    local playerId = self.playerId
     local questInstance = QuestManager.getActiveQuest(playerId, self.quest.id)
     
     if questInstance then
@@ -354,9 +351,9 @@ function QuestDialogueUI.showQuestDialogue(npc, npcId, questId, state)
     -- Get quest definition
     local quest = QuestManager.getQuest(questId)
     if quest then
-        -- Determine quest state for the player
-        local playerId = getSpecificPlayer(0):getPlayerNum()
-        local currentState = state
+         -- Determine quest state for the player
+        local playerId = self.playerId
+        local currentState = state --FixME: State is always nil
         
         if not currentState then
             if QuestManager.hasCompletedQuest(playerId, questId) then
@@ -365,6 +362,15 @@ function QuestDialogueUI.showQuestDialogue(npc, npcId, questId, state)
                 currentState = "active"
             else
                 currentState = "offer"
+            end
+        end
+
+        -- Call registerEscortedNpc or registerProtectedNpc if offering the quest
+        if currentState == "offer" then
+            if quest.title == "Escort the survivor" then
+                QuestEvents.registerEscortedNpc(npc)
+            elseif quest.title == "Protect the survivor" then
+                QuestEvents.registerProtectedNpc(npc)
             end
         end
         

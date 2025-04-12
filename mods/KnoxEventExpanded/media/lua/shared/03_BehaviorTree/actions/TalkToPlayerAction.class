@@ -1,0 +1,172 @@
+import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoPlayer;
+import zombie.behaviors.BehaviorNode;
+import zombie.core.Rand;
+import zombie.scripting.objects.Item;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+
+public class TalkToPlayerAction extends BehaviorNode {
+
+    private final IsoPlayer player;
+    private final String partyID;
+    private boolean questAssigned;
+    private boolean noQuestAvailable;
+
+    public TalkToPlayerAction(IsoPlayer player, String partyID) {
+        this.player = player;
+        this.partyID = partyID;
+        this.questAssigned = false;
+    }
+
+    @Override
+    public BehaviorNode.BehaviorNodeState execute() {
+        IsoGameCharacter npc = (IsoGameCharacter) this.getOwner();
+        if (npc == null || player == null) {
+            return BehaviorNodeState.Failed;
+        }
+        int playerID = player.getOnlineID();
+        int npcID = npc.getOnlineID();
+        String npcName = npc.getDescriptor().getDisplayName();
+
+        if (QuestEvents.isHostile(playerID, partyID)) {
+            handleHostileInteraction(npc, player, npcName);
+        } else if (QuestEvents.isAlly(playerID, partyID)) {
+            handleAllyInteraction(npc, player, playerID, npcName);
+        } else {
+            handleNeutralInteraction(npc, player, npcName);
+        }
+
+        if (((NpcPreset) npc.getNpcLua()).isRecruitable()) {
+            if (QuestEvents.getRelationship(playerID, partyID) > 50) {
+                List<String> options = new ArrayList<>();
+                options.add("Just saying hello.");
+                options.add("I'm good, thanks!");
+                options.add("Recruit");
+
+                String playerChoice = player.choiceBox(npcName + ": " + "Hello there, want to team up?", "Recruitment", options);
+
+                if (playerChoice.equals("Recruit")) {
+                    QuestEvents.addNpcToPlayerGroup(playerID, npc);
+                    npc.say(player, npcName + ": " + "Ok, I will join you.");
+                }
+            } else {
+                npc.say(player, npcName + ": " + "Sorry, I don't know you well enough to join you.");
+            }
+        } else if (QuestEvents.getNpcPlayerGroup(playerID).contains(npcID)) {
+            List<String> options = new ArrayList<>();
+            options.add("Just saying hello.");
+            options.add("I'm good, thanks!");
+            options.add("Dismiss");
+
+            String playerChoice = player.choiceBox(npcName + ": " + "Hello there, what can I do for you?", "Group", options);
+
+            if (playerChoice.equals("Dismiss")) {
+                QuestEvents.removeNpcFromPlayerGroup(playerID, npc);
+                npc.say(player, npcName + ": " + "Goodbye, then.");
+            }
+
+        }
+        return BehaviorNodeState.Succeeded;
+    }
+
+    private void handleHostileInteraction(IsoGameCharacter npc, IsoPlayer player, String npcName) {
+        List<String> hostilePhrases = Arrays.asList(
+                "Get out of here!",
+                "You're not welcome here.",
+                "Leave now or face the consequences!"
+        );
+        String hostilePhrase = hostilePhrases.get(Rand.Next(hostilePhrases.size()));
+        npc.say(player, npcName + ": " + hostilePhrase);
+        npc.Attack(player);
+    }
+
+    private void handleAllyInteraction(IsoGameCharacter npc, IsoPlayer player, int playerID, String npcName) {
+        if (questAssigned) {
+            List<String> questAssignedPhrases = Arrays.asList(
+                    "The quest has been assigned. Good luck!",
+                    "I hope you can complete this task.",
+                    "Do not fail me."
+            );
+            String questAssignedPhrase = questAssignedPhrases.get(Rand.Next(questAssignedPhrases.size()));
+            npc.say(player, npcName + ": " + questAssignedPhrase);
+            questAssigned = false;
+        } else if (noQuestAvailable) {
+            List<String> noQuestPhrases = Arrays.asList(
+                    "I'm sorry, I don't have any jobs for you right now.",
+                    "There's nothing I need help with at the moment.",
+                    "Maybe later. I have nothing for you now."
+            );
+            String noQuestPhrase = noQuestPhrases.get(Rand.Next(noQuestPhrases.size()));
+            npc.say(player, npcName + ": " + noQuestPhrase);
+            noQuestAvailable = false;
+        } else {
+            List<String> allyPhrases = Arrays.asList(
+                    "Hello, friend. Need any help?",
+                    "Anything I can do for you?",
+                    "How can I assist you today?"
+            );
+            String allyPhrase = allyPhrases.get(Rand.Next(allyPhrases.size()));
+
+            List<String> options = new ArrayList<>();
+            options.add("Just saying hello.");
+            options.add("I'm fine, thanks!");
+            options.add("Request a Job");
+
+            String playerChoice = player.choiceBox(npcName + ": " + allyPhrase, "Ally Interaction", options);
+
+            if (playerChoice.equals("Request a Job")) {
+                if (QuestEvents.canAssignQuest(playerID, npc)) {
+                    QuestEvents.assignQuestByNpc(playerID, npc);
+                    questAssigned = true;
+                } else {
+                    noQuestAvailable = true;
+                }
+            } else {
+                List<String> farewellPhrases = Arrays.asList(
+                        "Goodbye, then.",
+                        "See you around.",
+                        "Take care."
+                );
+                String farewellPhrase = farewellPhrases.get(Rand.Next(farewellPhrases.size()));
+                npc.say(player, npcName + ": " + farewellPhrase);
+            }
+        }
+    }
+
+    private void handleNeutralInteraction(IsoGameCharacter npc, IsoPlayer player, String npcName) {
+        List<String> neutralPhrases;
+        if (((NpcPreset) npc.getNpcLua()).isRecruitable()) {
+            neutralPhrases = Arrays.asList(
+                    "Hello there.",
+                    "Greetings.",
+                    "How are you doing?",
+                    "Want to team up?"
+            );
+        } else {
+            neutralPhrases = Arrays.asList(
+                    "Hello there.",
+                    "Greetings.",
+                    "How are you doing?"
+            );
+        }
+
+
+
+
+
+
+        String neutralPhrase = neutralPhrases.get(Rand.Next(neutralPhrases.size()));
+        npc.say(player, npcName + ": " + neutralPhrase);
+    }
+
+    @Override
+    public void reset() {
+        this.questAssigned = false;
+        this.noQuestAvailable = false;
+    }
+
+}

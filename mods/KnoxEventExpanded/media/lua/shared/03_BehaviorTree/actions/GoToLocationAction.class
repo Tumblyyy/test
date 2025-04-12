@@ -1,0 +1,69 @@
+package mods.KnoxEventExpanded.media.lua.shared.03_BehaviorTree.actions;
+
+import zombie.behaviors.BehaviorNode;
+import zombie.behaviors.BehaviorTree;
+import zombie.behaviors.BehaviorNodeState;
+import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoPlayer;
+import zombie.core.Rand;
+import zombie.core.math.Vector2;
+import zombie.gameStates.GameTime;
+import zombie.ai.states.WalkTowardState;
+import zombie.characters.MoveDelta;
+import zombie.iso.IsoWorld;
+import zombie.iso.IsoCell;
+import zombie.PathfindManager;
+import zombie.ai.astar.AStarPathFinderResult;
+import zombie.iso.IsoUtils;
+
+import se.krka.kahlua.vm.KahluaTable;
+import se.krka.kahlua.vm.KahluaUtil;
+
+public class GoToLocationAction extends BehaviorNode {
+
+    private Vector2 location;
+    private String partyID;
+
+    public GoToLocationAction(Vector2 location, String partyID) {
+        this.location = location;
+        this.partyID = partyID;
+    }
+
+    @Override
+    public BehaviorNodeState execute(BehaviorTree behaviorTree) {
+        IsoGameCharacter npc = behaviorTree.getActor();
+        IsoPlayer player = npc.getPlayer();
+        IsoCell cell = IsoWorld.instance.CurrentCell;
+
+        KahluaTable questEvents = (KahluaTable) KahluaUtil.getGlobals((KahluaTable) behaviorTree.lua.getGlobals()).rawget("QuestEvents");
+        boolean isHostile = (Boolean) KahluaUtil.callMethod(behaviorTree.lua.getConverter(), questEvents, "isHostile", player.getOnlineID(), this.partyID);
+        boolean isAlly = (Boolean) KahluaUtil.callMethod(behaviorTree.lua.getConverter(), questEvents, "isAlly", player.getOnlineID(), this.partyID);
+
+        if (isHostile) {
+            // Attack the player
+            return BehaviorNodeState.Failed; // Assuming attacking is handled elsewhere for now
+        } else if (isAlly) {
+            // Follow the player
+            npc.pathToCharacter(player);
+            return BehaviorNodeState.Running;
+        }
+
+        // Neutral or other cases: go to the location
+        IsoGridSquare targetSquare = cell.getGridSquare((int)location.x, (int)location.y, (int)npc.getZ());
+        if (targetSquare == null) {
+          return BehaviorNodeState.Failed;
+        }
+
+        AStarPathFinderResult path = PathfindManager.instance.AStar(npc.getSquare(), targetSquare);
+        if (path == null || path.isEmpty()) {
+          return BehaviorNodeState.Failed;
+        }        
+        if (IsoUtils.DistanceTo(npc.getX(), npc.getY(), targetSquare.getX(), targetSquare.getY()) < 1) {
+          return BehaviorNodeState.Succeeded;
+        }
+        npc.setPathFind(path);
+        npc.setPathTarget(targetSquare);
+        npc.setVariable("doingTask", true);        
+        return BehaviorNodeState.Running;
+    }
+}

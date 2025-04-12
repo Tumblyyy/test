@@ -289,4 +289,40 @@ To debug quest issues:
 3. Ensure all item IDs exist in the game or are custom-defined
 4. Provide balanced rewards appropriate to quest difficulty
 5. Connect quests to form meaningful chains or storylines
-6. Use the `onStart` and `onComplete` callbacks for special effects or spawning 
+6. Use the `onStart` and `onComplete` callbacks for special effects or spawning
+
+## Quest System Expansion Guidelines
+
+When expanding the quest system, always prioritize the integrity of the core functionality and user experience.
+
+**Key Considerations**
+
+1.  **Modularity:**
+    *   New quests should be designed as self-contained modules.
+    *   Avoid direct modifications to core quest system files; use extension points.
+2.  **Consistency:**
+    *   Adhere to existing quest definition schema and naming conventions.
+    *   Maintain consistency in objective and reward structures.
+3.  **Extensibility:**
+    *   Design new features to be easily extensible and composable.
+    *   Favor new objective types over complex conditional logic within existing types.
+4.  **Testing:**
+    *   Thoroughly test all new quests and features in isolation and integrated.
+    *   Use the debug tools to ensure objectives track correctly.
+5.  **Documentation:**
+    *   Document new quest definitions and any extension points clearly.
+    *   Update this guide with new patterns and best practices.
+6. **UI and UX:**
+    * All changes must be friendly to the player.
+    * The player must always have a way to understand his quest progress and what he needs to do next.
+    * Avoid blocking the player, or creating scenarios where the player is unsure of what needs to be done.
+
+**Common Expansion Use Cases**
+
+*   **New Quest Types:** Create new quest templates (e.g., timed, stealth).
+*   **Custom Objectives:** Define new objective types (e.g., gather resources, repair structures).
+*   **Reputation Extensions:** Build more complex faction or reputation interactions.
+*   **NPC AI Behaviors:** Integrate quests with NPC behaviors for richer interactions.
+*   **Dynamic World Events:** Trigger world events based on quest progression.
+
+By following these guidelines, developers can expand the quest system in a way that maintains quality, stability, and compatibility.

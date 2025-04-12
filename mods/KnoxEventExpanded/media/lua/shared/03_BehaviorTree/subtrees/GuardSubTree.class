@@ -1,0 +1,25 @@
+package knox.event.utils.behaviortree.subtrees;
+
+import knox.event.utils.behaviortree.core.BehaviorNode;
+import knox.event.utils.behaviortree.core.SelectorNode;
+import knox.event.utils.behaviortree.core.SequenceNode;
+import knox.event.utils.behaviortree.actions.GuardLocationAction;
+import zombie.characters.IsoGameCharacter;
+
+public class GuardSubTree extends BehaviorNode {
+    private IsoGameCharacter npc;
+
+    public GuardSubTree(IsoGameCharacter npc) {
+        this.npc = npc;
+        this.name = "GuardSubTree";
+
+        SelectorNode selector = new SelectorNode();
+        SequenceNode sequence = new SequenceNode();
+        
+        GuardLocationAction guardLocationAction = new GuardLocationAction(npc.getSquare());
+        sequence.addChild(guardLocationAction);
+
+        selector.addChild(sequence);
+        this.addChild(selector);
+    }
+}

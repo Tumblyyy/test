@@ -1,0 +1,22 @@
+package mods.KnoxEventExpanded.media.lua.shared.03_BehaviorTree.subtrees;
+
+import knox.event.utils.behaviortree.core.BehaviorNode;
+import knox.event.utils.behaviortree.core.Selector;
+import mods.KnoxEventExpanded.media.lua.shared.03_BehaviorTree.actions.FollowPlayerAction;
+import zombie.characters.IsoGameCharacter;
+
+public class GroupBehaviorSubTree extends BehaviorNode {
+    private final IsoGameCharacter npc;
+
+    public GroupBehaviorSubTree(IsoGameCharacter npc) {
+        this.npc = npc;
+        Selector selector = new Selector(npc);
+        FollowPlayerAction followPlayerAction = new FollowPlayerAction(npc,npc.getNpcPreset().getPartyID());
+        selector.addChild(followPlayerAction);
+        GuardSubTree guardSubTree = new GuardSubTree(npc);
+        selector.addChild(guardSubTree);
+        DoTaskSubTree doTaskSubTree = new DoTaskSubTree(npc);
+        selector.addChild(doTaskSubTree);
+        this.addChild(selector);
+    }
+}

@@ -24,6 +24,13 @@ local function sendSpawnNpc()
 	local player = getSpecificPlayer(0);
 	local square = player:getSquare();
 	local npc = KnoxEventNpcAPI.instance:spawnNpc("SurvivorNpc", square:getX(), square:getY());
+	lastSpawnedNpc = npc;
+end
+
+local function assignFetchBandagesQuest()
+	if lastSpawnedNpc then
+		QuestEvents.registerQuestToPlayer(getSpecificPlayer(0), "fetchBandages");
+	end
 end
 
 local function sendSpawnNpcGroup()
@@ -54,6 +61,8 @@ local function sendExportWaypoints()
        print("Sending ExportWaypoints")
 end
 
+local lastSpawnedNpc = nil;
+
 function KnoxEventAdventureDebugWindow:initialise()
 	ISPanel.initialise(self)
 
@@ -76,7 +85,11 @@ function KnoxEventAdventureDebugWindow:initialise()
 	-- Setup spawn NPC button
 	local spawnNpcButton = ISButton:new(10, y, w, h, "Spawn Npcs", nil, function() sendSpawnNpc() end)
 	self:addChild(spawnNpcButton)
-	-- Setup spawn npc group button
+    -- Setup assign quest button
+    local assignQuestButton = ISButton:new(self.width - w - padding, y, w, h, "Assign FetchBandages Quest", nil, function() assignFetchBandagesQuest() end)
+    self:addChild(assignQuestButton)
+
+	y = y + h;
 	local spawnNpcGroupButton = ISButton:new(self.width - w - padding, y, w, h, "Spawn NPC group", nil, function() sendSpawnNpcGroup() end)
 	self:addChild(spawnNpcGroupButton)
 

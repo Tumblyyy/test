@@ -1,0 +1,20 @@
+package knox.event.utils.behaviortree.subtrees;
+
+import knox.event.utils.behaviortree.actions.DoTaskAction;
+import knox.event.utils.behaviortree.core.BehaviorNode;
+import knox.event.utils.behaviortree.core.SelectorNode;
+import knox.event.utils.behaviortree.core.SequenceNode;
+import zombie.characters.IsoGameCharacter;
+
+public class DoTaskSubTree extends BehaviorNode {
+    private final IsoGameCharacter npc;
+
+    public DoTaskSubTree(IsoGameCharacter npc) {
+        this.npc = npc;
+        SelectorNode selector = new SelectorNode();
+        SequenceNode sequence = new SequenceNode();
+        sequence.addChild(new DoTaskAction(""));
+        selector.addChild(sequence);
+        this.addChild(selector);
+    }
+}

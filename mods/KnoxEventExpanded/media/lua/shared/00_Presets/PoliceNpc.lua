@@ -1,46 +1,12 @@
 if isClient() then return end;
 
 require "ISBaseObject"
-
-local NPC_PRESETS = "KnoxEventNpcPresets";
-local NPC_WEAPONS_KEY = "WEAPONS";
-local NPC_BAG_KEY = "BAGS";
-local NPC_OUTFITS_KEY = "OUTFITS";
-local NPC_CLOTHES_KEY = "CLOTHES";
-local NPC_POLICE_KEY = "PoliceNpc";
-
-local function addPoliceNpcPreset(_isNewGame)
-    local npcPreset = NpcPreset.new();
-
-    local weapons = ArrayList.new();
-    npcPreset:setWeaponsTier1(weapons);
-    npcPreset:setWeaponsTier2(weapons);
-    npcPreset:setWeaponsTier3(weapons);
-
-    local bags = ArrayList.new();
-    npcPreset:setBags(bags);
-
-    local citycop = ArrayList.new("Pistol2", "Shirt_PoliceBlue", "Vest_BulletPolice", "HolsterSimple", "Trousers_Police", "Shoes_BlackBoots");
-    npcPreset:addOutfit("CityCop", citycop);
-
-    local deputy = ArrayList.new("Revolver_Long", "Hat_Police_Grey", "Shirt_PoliceGrey", "Jacket_Police", "HolsterSimple", "Trousers_PoliceGrey", "Shoes_BlackBoots");
-    npcPreset:addOutfit("Deputy", deputy);
-
-    local trooper = ArrayList.new("Revolver_Long", "Hat_Police", "Shirt_PoliceBlue", "HolsterSimple", "Trousers_Police", "Shoes_BlackBoots");
-    npcPreset:addOutfit("Trooper", trooper);
-
-    local clothes = ArrayList.new();
-    npcPreset:setMaleClothes(clothes);
-    npcPreset:setFemaleClothes(clothes);
-
-    npcPreset:setBehaviorTree("PoliceBehaviorTree");
-
-    KnoxEventNpcAPI.instance:addPreset(NPC_POLICE_KEY, npcPreset);
-end
+require "NpcPreset"
 
 PolicePreset = ISBaseObject:derive("PolicePreset");
 
 function PolicePreset:dressNpc(npc)
+    -- TODO: remove this function and use outfits in NpcPreset
     local random = ZombRand(3);
     if random == 0 then
         self:dressNpcWithOutfit(npc, "CityCop");
@@ -116,6 +82,9 @@ function PolicePreset:new()
 	self.__index = self
     o.preset = NpcPreset.new("PoliceNpc", o);
 	o.preset:setBehaviorTree("PoliceBehaviorTree");
+    o.preset.faction = "Police"; -- Set faction
+    o.preset.partyID = "PoliceNpc"; -- Set partyID
+    o.preset.quests = {"raid"}; -- Added raid quest
 	return o
 end
 

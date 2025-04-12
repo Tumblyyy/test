@@ -1,0 +1,31 @@
+package knox.event.utils.behaviortree.actions;
+
+import knox.event.utils.behaviortree.core.BehaviorNode;
+import knox.event.utils.QuestEvents;
+import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoNpcCharacter;
+
+public class DoTaskAction extends BehaviorNode {
+
+    private String task;
+
+    public DoTaskAction(String task) {
+        this.task = task;
+    }
+
+    @Override
+    public void execute() {
+        IsoGameCharacter npc = this.getNPC();
+        IsoGameCharacter player = this.getPlayer();
+
+        if (QuestEvents.isHostile(player.getOnlineID(), ((IsoNpcCharacter) npc).getPreset().partyID)) {
+            // Attack the player
+            npc.pathToCharacter(player);
+        } else {
+            // Do the task
+            System.out.println("NPC " + npc.getName() + " is doing task: " + task);
+            // Add logic to perform the task here.
+            // For example, if the task is "chop wood", make the npc go to the trees and chop them.
+        }
+    }
+}

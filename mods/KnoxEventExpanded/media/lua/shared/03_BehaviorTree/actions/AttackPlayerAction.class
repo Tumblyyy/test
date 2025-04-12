@@ -1,0 +1,65 @@
+package mods.KnoxEventExpanded.media.lua.shared.03_BehaviorTree.actions;
+
+import zombie.ai.astar.Mover;
+import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoPlayer;
+import zombie.characters.Stats;
+import zombie.characters.SurvivorDesc;
+import zombie.characters.WornItems.BodyLocationGroup;
+import zombie.characters.skills.PerkFactory;
+import zombie.characters.traits.TraitFactory;
+import zombie.core.Rand;
+import zombie.core.skinnedmodel.population.OutfitManager;
+import zombie.core.skinnedmodel.visual.HumanVisual;
+import zombie.inventory.InventoryItem;
+import zombie.inventory.ItemContainer;
+import zombie.inventory.ItemPickerJava;
+import zombie.inventory.types.HandWeapon;
+import zombie.iso.BuildingDef;
+import zombie.iso.IsoCell;
+import zombie.iso.IsoChunk;
+import zombie.iso.IsoGridSquare;
+import zombie.iso.IsoObject;
+import zombie.iso.IsoWorld;
+import zombie.iso.objects.IsoDeadBody;
+import zombie.network.GameClient;
+import zombie.network.GameServer;
+import zombie.ui.TextManager;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import zombie.behaviors.BehaviorNode;
+
+public class AttackPlayerAction extends BehaviorNode {
+
+    private IsoPlayer player;
+
+    public AttackPlayerAction(IsoPlayer player) {
+        this.player = player;
+    }
+
+    @Override
+    public void execute(Mover mover) {
+        IsoGameCharacter npc = (IsoGameCharacter) mover;
+        if (player != null && npc != null) {
+            npc.setVariable("Aggro", true);
+            npc.setTarget(player);
+            npc.pathToCharacter(player);
+             if (npc.getAttackTarget() == null)
+                 npc.setAttackTarget(player);
+             if (npc.getStats().getAnger() < 1)
+                 npc.getStats().setAnger(1);
+
+        }
+    }
+
+    @Override
+    public boolean check(Mover mover) {
+       return true;
+    }
+}

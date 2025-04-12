@@ -1,0 +1,36 @@
+package mods.KnoxEventExpanded.media.lua.shared.03_BehaviorTree.conditions;
+
+import zombie.characters.IsoGameCharacter;
+import zombie.scripting.objects.ScriptCharacter;
+import zombie.ai.astar.AStarPathMap;
+import zombie.ai.astar.IPathfinder;
+import zombie.ai.states.PathFindState;
+import zombie.characters.IsoZombie;
+import zombie.characters.SurvivorFactory;
+import zombie.characters.SurvivorGroup;
+import zombie.characters.IsoPlayer;
+
+import mods.KnoxEventExpanded.media.lua.shared.03_BehaviorTree.core.BehaviorNode;
+
+public class IsObjectiveCompletedCondition extends BehaviorNode {
+
+    private String questID;
+    private String objectiveType;
+
+    public IsObjectiveCompletedCondition(String questID, String objectiveType) {
+        this.questID = questID;
+        this.objectiveType = objectiveType;
+    }
+
+    @Override
+    public boolean check(IsoGameCharacter character) {
+        if (character instanceof IsoPlayer){
+            return false;
+        }
+
+        --[[
+        --TODO: Implement the correct logic to check if the objective is completed
+        --]]
+        return false;
+    }
+}

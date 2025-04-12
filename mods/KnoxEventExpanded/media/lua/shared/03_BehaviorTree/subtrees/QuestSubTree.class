@@ -1,0 +1,118 @@
+package knox.event.utils.behaviortree;
+
+import knox.event.KnoxEventQuests;
+import knox.event.RelationshipManager;
+import knox.event.RelationshipState;
+import knox.event.actions.AttackPlayerAction;
+import knox.event.actions.GoToLocationAction;
+import knox.event.conditions.IsObjectiveActiveCondition;
+import knox.event.utils.behaviortree.core.BehaviorNode;
+import knox.event.utils.behaviortree.core.SelectorNode;
+import knox.event.utils.behaviortree.core.SequenceNode;
+import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoPlayer;
+
+public class QuestSubTree extends BehaviorNode {
+    private IsoGameCharacter npc;
+
+    public QuestSubTree(IsoGameCharacter npc) {
+        this.npc = npc;
+        this.name = "QuestSubTree";
+
+        SelectorNode questSelector = new SelectorNode(npc);
+        this.addChild(questSelector);
+
+        SequenceNode fetchSequence = new SequenceNode(npc);
+        fetchSequence.setName("FetchSequence");
+        fetchSequence.addChild(new IsObjectiveActiveCondition(npc, "fetch"));
+        // Assuming a general "go to location" for fetching.  May need more specific logic.
+        fetchSequence.addChild(new GoToLocationAction(npc, null, ""));
+        questSelector.addChild(fetchSequence);
+
+        SequenceNode killSequence = new SequenceNode(npc);
+        killSequence.setName("KillSequence");
+        killSequence.addChild(new IsObjectiveActiveCondition(npc, "kill"));
+        // Assuming "attack player" for the kill objective.
+        killSequence.addChild(new AttackPlayerAction(npc, (IsoPlayer) npc.getCharacter()));
+        questSelector.addChild(killSequence);
+
+        SequenceNode raidSequence = new SequenceNode(npc);
+        raidSequence.setName("RaidSequence");
+        raidSequence.addChild(new IsObjectiveActiveCondition(npc, "reach")); // Assuming "reach" for raid.
+        // Assuming a general "go to location" for raiding. May need more specific logic.
+        raidSequence.addChild(new GoToLocationAction(npc, null, ""));
+        questSelector.addChild(raidSequence);
+
+        // Referencing the EscortSubTree
+        BehaviorNode escortSubTree = new EscortSubTree(npc);
+        questSelector.addChild(escortSubTree);
+
+        SequenceNode talkSequence = new SequenceNode(npc);
+        talkSequence.setName("TalkSequence");
+        // Referencing the TalkSubTree
+        BehaviorNode talkSubTree = new TalkSubTree(npc);
+        questSelector.addChild(talkSubTree);
+
+        SequenceNode interactSequence = new SequenceNode(npc);
+        interactSequence.setName("InteractSequence");
+        interactSequence.addChild(new IsObjectiveActiveCondition(npc, "interact"));
+        // Assuming a general "go to location" for interaction. May need more specific logic.
+        interactSequence.addChild(new GoToLocationAction(npc, null, ""));
+        questSelector.addChild(interactSequence);
+    }
+
+    @Override
+    public void execute() {
+        super.execute();
+        // Add any additional logic needed for the QuestSubTree's overall execution
+    }
+
+    // Helper method to get the player (assuming player index 0)
+    private IsoPlayer getPlayer() {
+        return IsoPlayer.getInstance();
+    }
+
+    // Helper method to check if the NPC has an active quest
+    private boolean hasActiveQuest() {
+        if (getPlayer() != null && npc instanceof IsoNpcCharacter) {
+            return KnoxEventQuests.instance.hasActiveQuest(getPlayer(), (IsoNpcCharacter) npc);
+        }
+        return false;
+    }
+
+    // Helper method to get the relationship state
+    private RelationshipState getRelationshipState(String partyId) {
+        if (getPlayer() != null) {
+            return RelationshipManager.instance.getRelationshipState(getPlayer().getOnlineID(), partyId);
+        }
+        return RelationshipState.NEUTRAL; // Default to neutral
+    }
+
+    // Helper method to get the NPC's party ID
+    private String getNpcPartyId() {
+        // Assuming you have a method to get the party ID from the NPC
+        // Replace this with the actual method
+        return ((IsoNpcCharacter) npc).getNpcPartyId();
+    }
+
+    // Helper method to check if the player is hostile
+    private boolean isPlayerHostile() {
+        return getRelationshipState(getNpcPartyId()) == RelationshipState.HOSTILE;
+    }
+
+    // Helper method to check if the player is an ally
+    private boolean isPlayerAlly() {
+        return getRelationshipState(getNpcPartyId()) == RelationshipState.ALLY;
+    }
+
+    // Helper method to get the current quest ID
+    private String getCurrentQuestId() {
+        if (getPlayer() != null && npc instanceof IsoNpcCharacter) {
+            return KnoxEventQuests.instance.getCurrentQuestId(getPlayer(), (IsoNpcCharacter) npc);
+        }
+        return "";
+    }
+
+
+}

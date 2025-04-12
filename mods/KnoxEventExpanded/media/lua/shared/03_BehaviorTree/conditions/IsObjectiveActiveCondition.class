@@ -1,0 +1,41 @@
+import zombie.ai.astar.AStarPathMap;
+import zombie.behaviors.BehaviorNode;
+import zombie.behaviors.BehaviorTree;
+import zombie.characters.IsoGameCharacter;
+
+public class IsObjectiveActiveCondition extends BehaviorNode {
+
+    private final String questID;
+    private final String objectiveType;
+
+    public IsObjectiveActiveCondition(String questID, String objectiveType) {
+        this.questID = questID;
+        this.objectiveType = objectiveType;
+    }
+
+    @Override
+    public boolean check(IsoGameCharacter character, BehaviorTree behaviorTree, AStarPathMap aStarPathMap) {
+        if (character == null || character.getCurrentSquare() == null) {
+            return false;
+        }
+        if (QuestEvents.questDatabase == null){
+            return false;
+        }
+        int playerId = -1;
+        if (character.getOnlineID() > 0)
+        {
+            playerId = character.getOnlineID();
+        }
+        if (QuestEvents.questDatabase[playerId] != null) {
+            if(QuestEvents.questDatabase[playerId].containsKey(questID)){
+                 return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public BehaviorNode copy() {
+        return new IsObjectiveActiveCondition(this.questID, this.objectiveType);
+    }
+}

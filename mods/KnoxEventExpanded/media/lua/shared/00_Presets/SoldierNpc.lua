@@ -1,36 +1,13 @@
 if isClient() then return end;
 
 require "ISBaseObject"
-
-local NPC_PRESETS = "KnoxEventNpcPresets";
-local NPC_WEAPONS_KEY = "WEAPONS";
-local NPC_BAG_KEY = "BAGS";
-local NPC_OUTFITS_KEY = "OUTFITS";
-local NPC_CLOTHES_KEY = "CLOTHES";
-local NPC_SOLDIER_KEY = "SoldierNpc";
-
-local function addSoldierNpcPreset(_isNewGame)
-    local npcPreset = NpcPreset.new();
-
-    local weapons = ArrayList.new();
-    weapons:add("AssaultRifle");
-    npcPreset:setWeaponsTier1(weapons);
-
-    local bags = ArrayList.new();
-    bags:add("Bag_ALICEpack_Army");
-    npcPreset:setBags(bags);
-
-    local outfit1 = ArrayList.new("Hat_Army", "Jacket_ArmyCamoGreen",
-    "Tshirt_ArmyGreen", "Vest_BulletArmy", "Trousers_ArmyService", "Shoes_ArmyBoots");
-    local outfits = ArrayList.new(outfit1);
-    npcPreset:addOutfit("Soldier", outfit1);
-
-    npcPreset:setBehaviorTree("SoldierBehaviorTree");
-
-    KnoxEventNpcAPI.instance:addPreset(NPC_SOLDIER_KEY, npcPreset);
-end
+require "NpcPreset"
 
 SoldierPreset = ISBaseObject:derive("SoldierPreset");
+
+local function addEscortQuest(preset)
+    table.insert(preset.quests, "escort")
+end
 
 function SoldierPreset:dressNpc(npc)
     local hat = npc:getInventory():AddItem("Hat_Army");
@@ -63,15 +40,14 @@ function SoldierPreset:dressNpc(npc)
     local backpack = npc:getInventory():AddItem("Bag_ALICEpack_Army");
     npc:setClothingItem_Back(nil);
 	npc:setClothingItem_Back(backpack);
-
     local gun = npc:getInventory():AddItem("AssaultRifle");
 	npc:setPrimaryHandItem(gun);
 	npc:setSecondaryHandItem(gun);
     if gun:getMagazineType() == nil then
-        gun:setCurrentAmmoCount(gun:getMaxAmmo());
+       gun:setCurrentAmmoCount(gun:getMaxAmmo());
     else
-        gun:setCurrentAmmoCount(gun:getMaxAmmo());
-        gun:setContainsClip(true);
+       gun:setCurrentAmmoCount(gun:getMaxAmmo());
+       gun:setContainsClip(true);
     end
 end
 
@@ -84,7 +60,10 @@ function SoldierPreset:new()
 	setmetatable(o, self)
 	self.__index = self
     o.preset = NpcPreset.new("SoldierNpc", o);
-	o.preset:setBehaviorTree("SoldierBehaviorTree");
+    o.preset.faction = "Soldiers";
+    o.preset.partyID = "SoldierNpc";
+    o.preset:setBehaviorTree("SoldierBehaviorTree");
+    addEscortQuest(o.preset)
 	return o
 end
 

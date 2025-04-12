@@ -1,0 +1,34 @@
+import zombie.ai.astar.AStarPathFinder;
+import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoPlayer;
+import zombie.characters.SurvivorFactory;
+import zombie.characters.SurvivorGroup;
+import zombie.core.Rand;
+import zombie.iso.IsoGridSquare;
+
+public class ChangeRelationshipAction extends BehaviorNode {
+
+    private String partyID;
+    private int change;
+
+    public ChangeRelationshipAction(String partyID, int change) {
+        this.partyID = partyID;
+        this.change = change;
+    }
+
+    @Override
+    public void execute(IsoGameCharacter character) {
+        if (character instanceof IsoPlayer) {
+            IsoPlayer player = (IsoPlayer) character;
+             QuestEvents.changeRelationship(player.getOnlineID(), this.partyID, this.change);
+
+        } else {
+             System.out.println("Error: The character is not an IsoPlayer.");
+        }
+    }
+
+    @Override
+    public boolean check(IsoGameCharacter character) {
+        return true;
+    }
+}

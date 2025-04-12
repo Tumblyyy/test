@@ -1,0 +1,249 @@
+package knox.event.utils.behaviortree;
+
+import knox.event.utils.behaviortree.actions.AttackPlayerAction;
+import knox.event.utils.behaviortree.conditions.IsHostileCondition;
+import knox.event.utils.behaviortree.core.BehaviorNode;
+import knox.event.utils.behaviortree.core.SafeGoalNode;
+import knox.event.utils.behaviortree.core.ScavengeRegion;
+import knox.event.utils.behaviortree.subtrees.driving.DrivingSubTree;
+import knox.event.utils.behaviortree.subtrees.findsafehouse.FindSafeHouseSubTree;
+import knox.event.utils.behaviortree.subtrees.hunt.HuntSubTree;
+import knox.event.utils.behaviortree.subtrees.loot.LootingSubTree;
+import knox.event.utils.behaviortree.subtrees.roaming.RoamingSubTree;
+import knox.event.utils.behaviortree.subtrees.safehouse.SafehouseSubTree;
+import knox.event.utils.behaviortree.subtrees.quest.QuestSubTree;
+import knox.event.utils.behaviortree.subtrees.quest.EscortSubTree;
+import knox.event.utils.behaviortree.subtrees.quest.TalkSubTree;
+import knox.event.utils.behaviortree.subtrees.quest.GoToLocationSubTree;
+import knox.event.utils.behaviortree.subtrees.GroupBehaviorSubTree;
+import se.krka.kahlua.vm.KahluaTable;
+import zombie.GameTime;
+import zombie.characters.IsoNpcPlayer;
+import zombie.characters.IsoPlayer;
+import zombie.iso.BuildingDef;
+import zombie.characters.SurvivorFactory;
+import zombie.characters.SurvivorGroup;
+
+public class SurvivorBehaviorTree extends NpcBehaviorTree {
+   private SafeGoalNode goalNode;
+   public String job1 = "";
+   public String job2 = "";
+   public String job3 = "";
+   private QuestSubTree questSubTree;
+   private EscortSubTree escortSubTree;
+   private TalkSubTree talkSubTree;
+   private GoToLocationSubTree goToLocationSubTree;
+   private IsHostileCondition isHostileCondition;
+   private AttackPlayerAction attackPlayerAction;
+   private GroupBehaviorSubTree groupBehaviorSubTree;
+
+   public SurvivorBehaviorTree(IsoNpcPlayer npc) {
+      super(npc);
+      this.name = "SurvivorBehaviorTree";
+      this.goalNode = new SafeGoalNode(npc, this);
+      FindSafeHouseSubTree findSafeHouseSubTree = new FindSafeHouseSubTree(npc);
+      this.goalNode.addChild(findSafeHouseSubTree);
+      SafehouseSubTree safehouseSubTree = new SafehouseSubTree(npc);
+      this.goalNode.addChild(safehouseSubTree);
+      LootingSubTree lootingSubTree = new LootingSubTree(npc);
+      this.goalNode.addChild(lootingSubTree);
+      RoamingSubTree roamingSubTree = new RoamingSubTree(npc);
+      this.goalNode.addChild(roamingSubTree);
+      DrivingSubTree drivingSubTree = new DrivingSubTree(npc);
+      this.goalNode.addChild(drivingSubTree);
+      HuntSubTree huntSubTree = new HuntSubTree(npc);
+      this.goalNode.addChild(huntSubTree);
+      this.questSubTree = new QuestSubTree(npc);
+      this.goalNode.addChild(this.questSubTree);
+      this.escortSubTree = new EscortSubTree(npc);
+      this.goalNode.addChild(this.escortSubTree);
+      this.talkSubTree = new TalkSubTree(npc);
+      this.goalNode.addChild(this.talkSubTree);
+      this.goToLocationSubTree = new GoToLocationSubTree(npc);
+      this.goalNode.addChild(this.goToLocationSubTree);
+      this.rootNode.addChild(this.goalNode);
+      this.groupBehaviorSubTree = new GroupBehaviorSubTree(npc);
+      this.goalNode.addChild(this.groupBehaviorSubTree);
+      this.isHostileCondition = new IsHostileCondition(this.npc.getPreset().getPartyID());
+      this.attackPlayerAction = new AttackPlayerAction(IsoPlayer.getInstance());
+   }
+
+
+
+
+
+   public void reasonNextMove() {
+       BuildingDef def = this.npc.getSafeHouseBuildingDef();
+       BehaviorNode scavengeTree = this.npc.getBehaviorTree().getChildWithName("ScavengeSubTree");
+       IsoPlayer player = IsoPlayer.getInstance();
+
+       if (QuestEvents.isHostile(player.OnlineID, this.npc.getPreset().getPartyID())) {
+            this.attackPlayerAction.execute(npc);
+            return;
+        }
+
+        if (QuestEvents.isAlly(player.OnlineID, this.npc.getPreset().getPartyID())) {
+            if(!"EscortSubTree".equals(this.getGoal())){
+               this.setGoal("EscortSubTree");
+           }
+           return;
+       }
+
+        if (QuestEvents.getNpcPlayerGroup(player.OnlineID) != null && QuestEvents.getNpcPlayerGroup(player.OnlineID).contains(this.npc)) {
+            if (!"GroupBehaviorSubTree".equals(this.getGoal())) {
+                this.setGoal("GroupBehaviorSubTree");
+            }
+            return;
+       }
+
+        if (QuestEvents.hasActiveQuest(player.OnlineID, this.npc)) {
+            if (!"QuestSubTree".equals(this.getGoal())) {
+                this.setGoal("QuestSubTree");
+            }
+            return;
+        }
+
+       if (!"DrivingSubTree".equals(this.getGoal()) && !"StaySubTree".equals(this.getSubGoal())) {
+           if (def == null) {
+               if (!"FindSafeHouseSubTree".equals(this.getGoal())) {
+                   this.setGoal("FindSafeHouseSubTree");
+               }
+
+           } else if (!"SafehouseSubTree".equals(this.getGoal()) || !"BarricadeSubTree".equals(this.getSubGoal()) || !def.needsBarricade() || this.npc.bIsInMeta) {
+               if ("".equals(this.job1) || "".equals(this.job2) || "".equals(this.job3)) {
+                   this.npc.getGroup().assignJobs();
+               }
+
+               int hour = GameTime.instance.getHour();
+               int tx;
+               int ty;
+               int worldAgeHours;
+               int offset;
+               ScavengeRegion region;
+               if (hour >= 9 && hour <= 13) {
+                   if ("Guard".equals(this.job1)) {
+                       if (!"SafehouseSubTree".equals(this.getGoal()) || !"GuardSubTree".equals(this.getSubGoal())) {
+                           this.setGoal("SafehouseSubTree");
+                           this.setSubGoal("GuardSubTree");
+                       }
+                   } else if ("Rest".equals(this.job1)) {
+                       if (!"SafehouseSubTree".equals(this.getGoal()) || !"RestSubTree".equals(this.getSubGoal())) {
+                           this.setGoal("SafehouseSubTree");
+                           this.setSubGoal("RestSubTree");
+                       }
+                   } else if (!"RoamingSubTree".equals(this.getGoal()) || !"ScavengeSubTree".equals(this.getSubGoal())) {
+                       this.setGoal("RoamingSubTree");
+                       this.setSubGoal("ScavengeSubTree");
+                       tx = def.getX() + def.getW() / 2;
+                       ty = def.getY() + def.getH() / 2;
+                       worldAgeHours = Double.valueOf(GameTime.getInstance().getWorldAgeHours()).intValue();
+                       offset = 100 + 50 * worldAgeHours / 24;
+                       offset = Math.min(offset, 50);
+                       region = new ScavengeRegion(tx, ty, offset);
+                       scavengeTree.setData("ScavengeSubTreeScavengeRegion", region);
+                       scavengeTree.setData("LootingSubTreeCategoryAmmo", false);
+                       scavengeTree.setData("LootingSubTreeCategoryFood", true);
+                       scavengeTree.setData("LootingSubTreeCategoryFirstAid", true);
+                       scavengeTree.setData("LootingSubTreeCategoryGuns", false);
+                       scavengeTree.setData("LootingSubTreeCategoryMats", true);
+                       scavengeTree.setData("LootingSubTreeCategoryTools", false);
+                       scavengeTree.setData("LootingSubTreeCategoryWater", true);
+                       scavengeTree.setData("LootingSubTreeCategoryWeapons", false);
+                   }
+               } else if (hour >= 13 && hour <= 16) {
+                   if ("Guard".equals(this.job2)) {
+                       if (!"SafehouseSubTree".equals(this.getGoal()) || !"GuardSubTree".equals(this.getSubGoal())) {
+                           this.setGoal("SafehouseSubTree");
+                           this.setSubGoal("GuardSubTree");
+                       }
+                   } else if ("Rest".equals(this.job2)) {
+                       if (!"SafehouseSubTree".equals(this.getGoal()) || !"RestSubTree".equals(this.getSubGoal())) {
+                           this.setGoal("SafehouseSubTree");
+                           this.setSubGoal("RestSubTree");
+                       }
+                   } else if (!"RoamingSubTree".equals(this.getGoal()) || !"ScavengeSubTree".equals(this.getSubGoal())) {
+                       this.setGoal("RoamingSubTree");
+                       this.setSubGoal("ScavengeSubTree");
+                       tx = def.getX() + def.getW() / 2;
+                       ty = def.getY() + def.getH() / 2;
+                       worldAgeHours = Double.valueOf(GameTime.getInstance().getWorldAgeHours()).intValue();
+                       offset = 100 + 50 * worldAgeHours / 24;
+                       offset = Math.min(offset, 50);
+                       region = new ScavengeRegion(tx, ty, offset);
+                       scavengeTree.setData("ScavengeSubTreeScavengeRegion", region);
+                       scavengeTree.setData("LootingSubTreeCategoryAmmo", false);
+                       scavengeTree.setData("LootingSubTreeCategoryFood", true);
+                       scavengeTree.setData("LootingSubTreeCategoryFirstAid", true);
+                       scavengeTree.setData("LootingSubTreeCategoryGuns", false);
+                       scavengeTree.setData("LootingSubTreeCategoryMats", true);
+                       scavengeTree.setData("LootingSubTreeCategoryTools", false);
+                       scavengeTree.setData("LootingSubTreeCategoryWater", true);
+                       scavengeTree.setData("LootingSubTreeCategoryWeapons", false);
+                   }
+               } else if (hour >= 16 && hour <= 20) {
+                   if ("Guard".equals(this.job3)) {
+                       if (!"SafehouseSubTree".equals(this.getGoal()) || !"GuardSubTree".equals(this.getSubGoal())) {
+                           this.setGoal("SafehouseSubTree");
+                           this.setSubGoal("GuardSubTree");
+                       }
+                   } else if ("Rest".equals(this.job3)) {
+                       if (!"SafehouseSubTree".equals(this.getGoal()) || !"RestSubTree".equals(this.getSubGoal())) {
+                           this.setGoal("SafehouseSubTree");
+                           this.setSubGoal("RestSubTree");
+                       }
+                   } else if (!"RoamingSubTree".equals(this.getGoal()) || !"ScavengeSubTree".equals(this.getSubGoal())) {
+                       this.setGoal("RoamingSubTree");
+                       this.setSubGoal("ScavengeSubTree");
+                       tx = def.getX() + def.getW() / 2;
+                       ty = def.getY() + def.getH() / 2;
+                       worldAgeHours = Double.valueOf(GameTime.getInstance().getWorldAgeHours()).intValue();
+                       offset = 100 + 50 * worldAgeHours / 24;
+                       offset = Math.min(offset, 50);
+                       region = new ScavengeRegion(tx, ty, offset);
+                       scavengeTree.setData("ScavengeSubTreeScavengeRegion", region);
+                       scavengeTree.setData("LootingSubTreeCategoryAmmo", false);
+                       scavengeTree.setData("LootingSubTreeCategoryFood", true);
+                       scavengeTree.setData("LootingSubTreeCategoryFirstAid", true);
+                       scavengeTree.setData("LootingSubTreeCategoryGuns", false);
+                       scavengeTree.setData("LootingSubTreeCategoryMats", true);
+                       scavengeTree.setData("LootingSubTreeCategoryTools", false);
+                       scavengeTree.setData("LootingSubTreeCategoryWater", true);
+                       scavengeTree.setData("LootingSubTreeCategoryWeapons", false);
+                   }
+               } else if (!"SafehouseSubTree".equals(this.getGoal()) || !"RestSubTree".equals(this.getSubGoal())) {
+                   this.setGoal("SafehouseSubTree");
+                   this.setSubGoal("RestSubTree");
+               }
+
+           }
+       }
+   }
+
+   public BehaviorNode getGoalNode() {
+      return this.goalNode;
+   }
+
+   public String getGoal() {
+      return this.goalNode.getGoal();
+   }
+
+   public void setGoal(String goal) {
+      this.goalNode.setGoal(goal);
+   }
+
+   public String getSubGoal() {
+      return this.goalNode.getSubGoal();
+   }
+
+   public void setSubGoal(String goal) {
+      this.goalNode.setSubGoal(goal);
+   }
+
+   public KahluaTable getGoalData() {
+      return this.goalNode.saveData();
+   }
+
+   public void restoreGoalData(KahluaTable dataTable) {
+      this.goalNode.restoreData(dataTable);
+   }
+}

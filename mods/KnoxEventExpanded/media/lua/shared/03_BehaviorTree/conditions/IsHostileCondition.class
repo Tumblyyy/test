@@ -1,0 +1,34 @@
+import zombie.characters.IsoGameCharacter;
+import zombie.characters.SurvivorFactory;
+import zombie.characters.SurvivorGroup;
+import zombie.behaviors.BehaviorNode;
+import zombie.core.skinnedmodel.advancedanimation.AnimEvent;
+import zombie.core.skinnedmodel.advancedanimation.AnimNode;
+
+public class IsHostileCondition extends BehaviorNode {
+
+    private String partyID;
+
+    public IsHostileCondition(String partyID) {
+        this.partyID = partyID;
+    }
+
+    @Override
+    public boolean check(IsoGameCharacter character) {
+        int playerID = character.getOnlineID();
+        if (QuestEvents.isHostile(playerID, this.partyID)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void execute(IsoGameCharacter character) {
+
+    }
+
+    @Override
+    public boolean isDone(IsoGameCharacter character) {
+        return true;
+    }
+}

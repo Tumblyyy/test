@@ -1,0 +1,50 @@
+package knox.event.utils.behaviortree.actions;
+
+import knox.event.utils.behaviortree.core.BehaviorNode;
+import knox.event.utils.behaviortree.core.BehaviorTree;
+import knox.event.utils.behaviortree.conditions.IsHostileCondition;
+import knox.event.utils.behaviortree.core.Selector;
+import knox.event.utils.behaviortree.core.Sequence;
+import knox.event.utils.QuestEvents;
+import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoNpcCharacter;
+import zombie.characters.IsoPlayer;
+import zombie.iso.IsoGridSquare;
+import zombie.iso.Vector2;
+
+public class GuardLocationAction extends BehaviorNode {
+
+    private Vector2 location;
+    private String partyID;
+
+    public GuardLocationAction(Vector2 location, String partyID) {
+        this.location = location;
+        this.partyID = partyID;
+    }
+
+    @Override
+    public void execute(IsoGameCharacter npc, BehaviorTree behaviorTree) {
+        if (!(npc instanceof IsoNpcCharacter)) {
+            return;
+        }
+        IsoNpcCharacter isoNpc = (IsoNpcCharacter) npc;
+
+        IsoPlayer player = IsoPlayer.getInstance();
+        if (player == null) {
+            return;
+        }
+
+        if (QuestEvents.isHostile(player.getOnlineID(), this.partyID)) {
+            AttackPlayerAction attackPlayerAction = new AttackPlayerAction(player);
+            attackPlayerAction.execute(isoNpc, behaviorTree);
+        } else {
+            IsoGridSquare square = isoNpc.getCell().getGridSquare((int) location.x, (int) location.y, isoNpc.getZ());
+            if (square != null) {
+                 isoNpc.pathToLocation(square);
+                 if(isoNpc.getCurrentSquare() == square){
+                    isoNpc.setPathFind(false);
+                 }
+            }
+        }
+    }
+}

@@ -1,0 +1,66 @@
+package mods.KnoxEventExpanded.media.lua.shared.03_BehaviorTree.conditions;
+
+import zombie.ai.astar.Mover;
+import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoPlayer;
+import zombie.characters.SurvivorFactory;
+import zombie.characters.SurvivorGroup;
+import zombie.iso.IsoObject;
+import zombie.iso.IsoGridSquare;
+import zombie.ai.State;
+import zombie.ai.sadisticAIDirector.SleepingEvent;
+import zombie.behaviors.BehaviorNode;
+import zombie.behaviors.BehaviorTree;
+import zombie.behaviors.DecisionContext;
+import zombie.characters.IsoZombie;
+import zombie.characters.IsoLivingCharacter;
+import zombie.core.Rand;
+import zombie.iso.IsoDirections;
+import zombie.iso.Vector2;
+import zombie.iso.objects.IsoDoor;
+import zombie.network.GameClient;
+import zombie.network.GameServer;
+import zombie.scripting.ScriptManager;
+import zombie.scripting.objects.Item;
+import zombie.util.Type;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.List;
+
+import mods.KnoxEventExpanded.media.lua.shared.QuestEvents;
+
+public class IsAllyCondition extends BehaviorNode {
+
+    private String partyID;
+
+    public IsAllyCondition(String partyID) {
+        this.partyID = partyID;
+    }
+
+    @Override
+    public boolean check(DecisionContext context) {
+        IsoGameCharacter character = (IsoGameCharacter)context.getActor();
+        IsoPlayer player = Type.tryCastTo(character,IsoPlayer.class);
+        if (player == null){
+            for (int i=0;i<IsoPlayer.numPlayers;i++){
+                player = IsoPlayer.players[i];
+                if (player != null){
+                    if (QuestEvents.isAlly(player.getOnlineID(), partyID)){
+                        return true;
+                    }
+                }
+            }
+        }else{
+           return QuestEvents.isAlly(player.getOnlineID(), partyID);
+        }
+        return false;
+
+    }
+
+    @Override
+    public void reset() {
+    }
+}

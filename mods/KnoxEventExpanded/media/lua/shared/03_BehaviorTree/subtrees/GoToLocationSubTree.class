@@ -1,0 +1,32 @@
+package knox.event.utils.behaviortree.subtrees;
+
+import knox.event.utils.behaviortree.actions.GoToLocationAction;
+import knox.event.utils.behaviortree.conditions.IsObjectiveActiveCondition;
+import knox.event.utils.behaviortree.conditions.IsObjectiveCompletedCondition;
+import knox.event.utils.behaviortree.core.BehaviorNode;
+import knox.event.utils.behaviortree.core.SelectorNode;
+import knox.event.utils.behaviortree.core.SequenceNode;
+import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoNpcPlayer;
+
+public class GoToLocationSubTree extends BehaviorNode {
+    private IsoNpcPlayer npc;
+
+    public GoToLocationSubTree(IsoNpcPlayer npc) {
+        this.npc = npc;
+        SelectorNode selector = new SelectorNode(npc);
+        SequenceNode sequence = new SequenceNode(npc);
+
+        sequence.addChild(new IsObjectiveActiveCondition(npc, "reach"));
+        sequence.addChild(new IsObjectiveCompletedCondition(npc,"reach"));
+        sequence.addChild(new GoToLocationAction(npc, "Building",""));
+
+        selector.addChild(sequence);
+        this.addChild(selector);
+    }
+
+    @Override
+    public void execute() {
+        super.execute();
+    }
+}

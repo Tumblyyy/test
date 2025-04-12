@@ -1,0 +1,33 @@
+package knox.event.utils.behaviortree.subtrees;
+
+import knox.event.utils.behaviortree.core.BehaviorNode;
+import knox.event.utils.behaviortree.core.SelectorNode;
+import knox.event.utils.behaviortree.core.SequenceNode;
+import knox.event.utils.behaviortree.actions.FollowPlayerAction;
+import knox.event.utils.behaviortree.conditions.IsObjectiveActiveCondition;
+import knox.event.utils.behaviortree.conditions.IsObjectiveCompletedCondition;
+import zombie.characters.IsoNpcPlayer;
+import zombie.characters.IsoPlayer;
+
+
+public class EscortSubTree extends BehaviorNode {
+    private IsoNpcPlayer npc;
+
+    public EscortSubTree(IsoNpcPlayer npc) {
+        this.npc = npc;
+        this.name = "EscortSubTree";
+
+        SelectorNode selector = new SelectorNode();
+        SequenceNode sequence = new SequenceNode();
+
+        // Assuming the player is always player 0
+        IsoPlayer player = IsoPlayer.players[0];
+
+        FollowPlayerAction followPlayerAction = new FollowPlayerAction(player, npc.getPartyID());
+        IsObjectiveActiveCondition isObjectiveActiveCondition = new IsObjectiveActiveCondition(npc.getActiveQuest(), "escort");
+        sequence.addChild(isObjectiveActiveCondition);
+        sequence.addChild(followPlayerAction);
+        selector.addChild(sequence);
+        this.addChild(selector);
+    }
+}

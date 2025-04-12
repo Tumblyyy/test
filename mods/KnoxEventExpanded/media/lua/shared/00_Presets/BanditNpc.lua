@@ -1,6 +1,8 @@
 if isClient() then return end;
 
 require "ISBaseObject"
+require "NpcPreset"
+require "Quest"
 
 local weapons = {"Axe", "BaseballBat", "BaseballBatNails", "Crowbar", "WoodenLance",
 "LeadPipe", "Nightstick", "MetalBar", "MetalPipe", "Machete",
@@ -66,6 +68,8 @@ function BanditPreset:new()
 	setmetatable(o, self)
 	self.__index = self
     o.preset = NpcPreset.new("BanditNpc", o);
+    o.preset.faction = "Bandits";
+    o.preset.partyID = "BanditNpc";
 	o.preset:setBehaviorTree("BanditBehaviorTree");
 	return o
 end

@@ -1,0 +1,59 @@
+package mods.KnoxEventExpanded.media.lua.shared.03_BehaviorTree.actions;
+
+import mods.KnoxEventExpanded.media.lua.shared.QuestEvents;
+import zombie.ai.BehaviorNode;
+import zombie.ai.BehaviorNode.BehaviorNodeState;
+import zombie.characters.IsoGameCharacter;
+import zombie.characters.IsoPlayer;
+import zombie.core.Rand;
+import zombie.inventory.InventoryItem;
+import zombie.iso.IsoDirections;
+import zombie.iso.IsoObjectPicker;
+import zombie.iso.IsoGridSquare;
+import zombie.ai.State;
+import zombie.ai.StateMachine;
+import zombie.ai.sad.ObjectTask;
+import zombie.ai.sad.AStarZ;
+
+public class FollowPlayerAction extends BehaviorNode {
+
+    private IsoPlayer player;
+    private String partyID;
+
+    public FollowPlayerAction(IsoPlayer player, String partyID) {
+        this.player = player;
+        this.partyID = partyID;
+    }
+
+    @Override
+    public BehaviorNodeState execute() {
+        if (QuestEvents.isHostile(player.getOnlineID(), partyID)) {
+            IsoGameCharacter npc = this.getActor();
+            npc.setTarget(player);
+            return BehaviorNodeState.RUNNING;
+        }
+
+        IsoGameCharacter npc = this.getActor();
+        if (npc == null || player == null || player.getCurrentSquare() == null) {
+            return BehaviorNodeState.FAILED;
+        }
+        if (npc.getVehicle() != null || player.getVehicle() != null){
+            return BehaviorNodeState.FAILED;
+        }
+        
+        IsoGridSquare target = player.getCurrentSquare();
+        IsoGridSquare current = npc.getCurrentSquare();
+
+        if (target == null || current == null) {
+            return BehaviorNodeState.FAILED;
+        }
+
+        if (npc.getPathFindBehavior2().isPathfind() || npc.getPathFindBehavior2().getTarget() != null) {
+            npc.getPathFindBehavior2().pathToLocation(target);
+            return BehaviorNodeState.RUNNING;
+        } else {
+            npc.getPathFindBehavior2().pathToLocation(target);
+            return BehaviorNodeState.RUNNING;
+        }
+    }
+}
