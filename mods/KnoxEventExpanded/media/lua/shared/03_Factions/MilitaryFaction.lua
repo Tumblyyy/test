@@ -23,6 +23,9 @@ local function assignDefendNorth(npc, index)
     npc:setGoal("DefendSubTree");
     npc:setSubGoal("");
     local tree = npc:getBehaviorTree();
+    if tree == nil then
+        return;
+    end
     local defendSubTree = tree:getChildWithName("DefendSubTree");
     if defendSubTree == nil then
         -- TODO: Log here
@@ -55,6 +58,9 @@ local function assignDefendSouth(npc, index)
     npc:setGoal("DefendSubTree");
     npc:setSubGoal("");
     local tree = npc:getBehaviorTree();
+    if tree == nil then
+        return;
+    end
     local defendSubTree = tree:getChildWithName("DefendSubTree");
     local staySubTreeNode = defendSubTree:getChildWithName("StaySubTree");
     local stayMovementNode = staySubTreeNode:getChildWithName("MovementSubTree");
@@ -83,6 +89,9 @@ local function assignDefendEast(npc, index)
     npc:setGoal("DefendSubTree");
     npc:setSubGoal("");
     local tree = npc:getBehaviorTree();
+    if tree == nil then
+        return;
+    end
     local defendSubTree = tree:getChildWithName("DefendSubTree");
     local staySubTreeNode = defendSubTree:getChildWithName("StaySubTree");
     local stayMovementNode = staySubTreeNode:getChildWithName("MovementSubTree");
@@ -178,6 +187,11 @@ function MilitaryFaction:setup()
         local x = safehouse:getX() + safehouse:getW() / 2;
         local y = safehouse:getY() + safehouse:getH() / 2;
         npc:claimSafeHouse(x, y);
+    end
+    -- Initialize behavior trees for all NPCs in the faction
+    for i = 0, self.faction:getFactionGroups():size() - 1 do
+        local group = self.faction:getFactionGroups():get(i);
+        group:initAllNpcTrees()
     end
     local groupList = self.faction:getFactionGroups();
     local i = 0;
