@@ -221,4 +221,4 @@ function MilitaryFaction:new()
 	return o
 end
 
-MilitaryFaction.instance = MilitaryFaction:new()
+Events.OnInitGlobalModData.Add(function() MilitaryFaction.instance = MilitaryFaction:new(); end)
