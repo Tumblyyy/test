@@ -35,3 +35,5 @@ function SoldierPreset:new()
 end
 
 Events.OnInitGlobalModData.Add(function() SoldierPreset.instance = SoldierPreset:new(); end)
+
+Events.OnNpcLoaded.Add(function(npc) if instanceof(npc, "IsoNpcPlayer") and npc:getDescriptor():getProfession() == "soldier" then SoldierPreset.instance.preset:dressNpc(npc); end end)

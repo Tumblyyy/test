@@ -183,7 +183,6 @@ function MilitaryFaction:setup()
         while j < groupList:size() do
             local npc = groupList:get(j);
             npc:getXp():setXPToLevel(Perks.Aiming, 10);
-            SoldierPreset.instance.preset:dressNpc(npc)
             j = j + 1;
         end
         local npc = group:getGroupMembers():get(0);
