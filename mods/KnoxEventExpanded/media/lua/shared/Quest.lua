@@ -49,9 +49,11 @@ function Quest:onStart(player, npc)
 end
 
 function Quest:onFinish(player, npc, questGiver)
-    if self.faction then
-        QuestEvents.changeRelationship(player:getOnlineID(), self.faction, 10)
-    -- Stub method
+    <CODE_BLOCK>
+    if questGiver and self.faction then
+        QuestEvents.changeRelationship(player:getOnlineID(), self.faction, 10) -- Assuming faction affects relationship
+    end
+    </CODE_BLOCK>
 end
 
 -- CraftObjective class

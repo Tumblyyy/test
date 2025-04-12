@@ -18,7 +18,7 @@ function QuestManager.validateQuestDef(questDef)
         debugLog("ERROR: Attempted to register nil quest definition")
         return false, "Nil quest definition"
     end
-    
+
     if not questDef.id then
         debugLog("ERROR: Quest definition missing ID")
         return false, "Missing ID"
@@ -69,7 +69,7 @@ function QuestManager.validateQuestDef(questDef)
             debugLog("WARNING: Quest " .. questDef.id .. ", objective " .. objective.id .. " (escort) has no targetId")
         end
     end
-    
+
     return true, nil
 end
 
@@ -77,6 +77,39 @@ end
 function QuestManager.getQuest(questId)
     return QuestManager.quests[questId]
 end
+
+-- Validate objective definition
+function QuestManager.validateObjectiveDef(questId, objective)
+    if not objective then
+        debugLog("ERROR: Quest " .. questId .. " has a nil objective.")
+        return false, "Objective is nil"
+    end
+
+    if not objective.id then
+        debugLog("ERROR: Quest " .. questId .. " has objective without ID")
+        return false, "Objective missing ID"
+    end
+
+    if not objective.type then
+        debugLog("ERROR: Quest " .. questId .. ", objective " .. objective.id .. " missing type")
+        return false, "Objective missing type"
+    end
+
+    -- Validate type-specific properties
+    if objective.type == "item" and (not objective.items or #objective.items == 0) then
+        debugLog("ERROR: Quest " .. questId .. ", objective " .. objective.id .. " (item) has no items")
+        return false, "Item objective missing items"
+    end
+
+    if objective.type == "kill" and not objective.targetType then
+        debugLog("ERROR: Quest " .. questId .. ", objective " .. objective.id .. " (kill) has no targetType")
+        return false, "Kill objective missing targetType"
+    end
+
+    return true, nil
+end
+
+
 
 -- Register a quest definition
 function QuestManager.registerQuest(questDef)
@@ -172,14 +205,16 @@ function QuestManager.startQuest(player, questId)
         objectiveCompletionTimes = {}
     }
     
-    -- Initialize objectives
+     -- Initialize objectives
     for _, objectiveDef in ipairs(questDef.objectives) do
-        questInstance.objectives[objectiveDef.id] = {
-            completed = false,
-            progress = 0,
-            maxProgress = objectiveDef.count or 1,
-            available = not objectiveDef.requires -- Only available if no prerequisites
-        }
+         local isValid, errorMsg = QuestManager.validateObjectiveDef(questId, objectiveDef)
+         if isValid then
+             questInstance.objectives[objectiveDef.id] = {
+                 completed = false, progress = 0, maxProgress = objectiveDef.count or 1, available = not objectiveDef.requires }
+         else
+             debugLog("ERROR: Invalid objective in quest " .. questId .. ": " .. errorMsg)
+             return false
+         end
     }
     
     -- Set time limit if defined
@@ -192,25 +227,25 @@ function QuestManager.startQuest(player, questId)
     
     -- Notify client
     if isServer() then
-        sendServerCommand(player, "QuestSystem", "QuestStarted", {
-            questId = questId,
-            questTitle = questDef.title,
-            questDescription = questDef.description,
-            timeLimit = questDef.timeLimit
-        })
-        
-        -- Send initial objectives that are available
-        for _, objective in ipairs(questDef.objectives) do
-            if not objective.requires then
-                sendServerCommand(player, "QuestSystem", "ObjectiveAdded", {
-                    questId = questId, 
-                    objectiveId = objective.id,
-                    objectiveDescription = objective.description
-                })
-            end
-        end
-    end
-    
+         sendServerCommand(player, "QuestSystem", "QuestStarted", {
+             questId = questId,
+             questTitle = questDef.title,
+             questDescription = questDef.description,
+             timeLimit = questDef.timeLimit
+         })
+
+         -- Send initial objectives that are available
+         for _, objective in ipairs(questDef.objectives) do
+             if not objective.requires then
+                 sendServerCommand(player, "QuestSystem", "ObjectiveAdded", {
+                     questId = questId,
+                     objectiveId = objective.id,
+                     objectiveDescription = objective.description
+                 })
+             end
+         end
+     end
+
     debugLog("Started quest: " .. questId .. " for player: " .. tostring(playerId))
     return true
 end
@@ -284,11 +319,17 @@ function QuestManager.meetsRequirements(player, questDef)
     
     -- Check reputation requirements
     if req.reputation then
-        local playerData = ModData.get("PlayerData")
-        if not playerData or not playerData[playerId] or not playerData[playerId].reputation then
-            return false
-        end
-        
+         local playerData = ModData.get("PlayerData")
+         if not playerData then
+             debugLog("Warning: PlayerData is nil")
+             return false
+         end
+         if not playerData[playerId] or not playerData[playerId].reputation then
+             debugLog("Warning: PlayerData for player " .. playerId .. " is incomplete")
+             return false
+         end
+
+
         for faction, minRep in pairs(req.reputation) do
             if (playerData[playerId].reputation[faction] or 0) < minRep then
                 return false
@@ -307,13 +348,13 @@ function QuestManager.isObjectiveAvailable(player, questId, objectiveId)
     local questInstance = QuestManager.playerQuests[playerId][questId]
     if not questInstance then return false end
     
-    local questDef = QuestManager.quests[questId]
-    if not questDef then return false end
-    
-    -- Find the objective definition
-    local objectiveDef = nil
-    for _, obj in ipairs(questDef.objectives) do
-        if obj.id == objectiveId then
+     local questDef = QuestManager.quests[questId]
+     if not questDef then return false end
+
+     -- Find the objective definition
+     local objectiveDef = nil
+     for _, obj in ipairs(questDef.objectives) do
+         if obj.id == objectiveId then
             objectiveDef = obj
             break
         end
@@ -321,10 +362,10 @@ function QuestManager.isObjectiveAvailable(player, questId, objectiveId)
     
     if not objectiveDef then return false end
     
-    -- If no requires, it's always available
-    if not objectiveDef.requires then return true end
-    
-    -- Check requirements
+     -- If no requires, it's always available
+     if not objectiveDef.requires then return true end
+
+     -- Check requirements
     if type(objectiveDef.requires) == "string" then
         -- Single requirement
         return questInstance.objectivesCompleted[objectiveDef.requires] == true
@@ -396,7 +437,7 @@ function QuestManager.updateObjective(player, questId, objectiveId, progress)
             objective.available = true
             -- Notify client about newly available objective
             if isServer() then
-                local objDef = nil
+                 local objDef = nil
                 for _, def in ipairs(QuestManager.quests[questId].objectives) do
                     if def.id == objectiveId then objDef = def; break end
                 end
@@ -410,6 +451,7 @@ function QuestManager.updateObjective(player, questId, objectiveId, progress)
                 end
             end
         else
+             -- Objective not available, log it
             debugLog("Objective '" .. objectiveId .. "' not available yet")
             return false
         end
@@ -426,10 +468,10 @@ function QuestManager.updateObjective(player, questId, objectiveId, progress)
         objective.completionTime = getGameTime():getWorldAgeHours()
         
         -- Track completion for condition checks
-        questInstance.objectivesCompleted[objectiveId] = true
-        questInstance.objectiveCompletionTimes[objectiveId] = objective.completionTime
-        
-        debugLog("Completed objective: " .. objectiveId .. " for quest: " .. questId)
+         questInstance.objectivesCompleted[objectiveId] = true
+         questInstance.objectiveCompletionTimes[objectiveId] = objective.completionTime
+
+         debugLog("Completed objective: " .. objectiveId .. " for quest: " .. questId)
         
         -- Update availability of other objectives
         for id, obj in pairs(questInstance.objectives) do
@@ -437,7 +479,7 @@ function QuestManager.updateObjective(player, questId, objectiveId, progress)
                 if QuestManager.isObjectiveAvailable(player, questId, id) then
                     obj.available = true
                     
-                    -- Notify client about newly available objective
+                     -- Notify client about newly available objective
                     if isServer() then
                         local objDef = nil
                         for _, def in ipairs(QuestManager.quests[questId].objectives) do
@@ -451,6 +493,7 @@ function QuestManager.updateObjective(player, questId, objectiveId, progress)
                                 objectiveDescription = objDef.description
                             })
                         end
+                     end
                     end
                 end
             end
@@ -464,14 +507,14 @@ function QuestManager.updateObjective(player, questId, objectiveId, progress)
                 break
             end
         end
-        
+
         -- Complete quest if all available objectives are completed
         if allCompleted then
             QuestManager.completeQuest(player, questId)
         end
-    end
-    
-    -- Notify client
+     end
+
+     -- Notify client
     if isServer() then
         sendServerCommand(player, "QuestSystem", "ObjectiveUpdated", {
             questId = questId,
@@ -532,7 +575,11 @@ function QuestManager.completeQuest(player, questId)
                 player:getXp():AddXP(Perks.FromString(reward.skill), reward.amount)
             elseif reward.type == "reputation" then
                 -- Handle reputation rewards
-                local playerData = ModData.get("PlayerData") or {}
+                 local playerData = ModData.get("PlayerData")
+                 if not playerData then
+                     playerData = {} -- Initialize if nil
+                 end
+
                 playerData[playerId] = playerData[playerId] or {}
                 playerData[playerId].reputation = playerData[playerId].reputation or {}
                 playerData[playerId].reputation[reward.faction] = 
@@ -542,7 +589,7 @@ function QuestManager.completeQuest(player, questId)
         end
     end
     
-    -- Run custom completion function if defined
+     -- Run custom completion function if defined
     if quest.onComplete and type(quest.onComplete) == "function" then
         quest.onComplete(player, questInstance)
     end
@@ -576,7 +623,7 @@ function QuestManager.completeQuest(player, questId)
         end
     end
     
-    -- Notify client
+     -- Notify client
     if isServer() then
         sendServerCommand(player, "QuestSystem", "QuestCompleted", {
             questId = questId,
@@ -631,7 +678,7 @@ function QuestManager.failQuest(player, questId, reason)
     
     QuestManager.failedQuests[playerId][questId] = questInstance
     
-    -- Run custom failure function if defined
+     -- Run custom failure function if defined
     local quest = QuestManager.quests[questId]
     if quest.onFail and type(quest.onFail) == "function" then
         quest.onFail(player, questInstance)
@@ -763,7 +810,7 @@ function QuestManager.registerEventHandlers()
         
         for questId, questInstance in pairs(QuestManager.playerQuests[playerId]) do
             if not questInstance.completed and not questInstance.failed then
-                local questDef = QuestManager.quests[questId]
+                 local questDef = QuestManager.quests[questId]
                 
                 for _, objective in ipairs(questDef.objectives) do
                     if objective.type == "kill" and 
@@ -772,7 +819,7 @@ function QuestManager.registerEventHandlers()
                         
                         -- Check if zombie type matches
                         if not objective.targetType or zombie:getZombieType() == objective.targetType then
-                            QuestManager.updateObjective(player, questId, objective.id, 1)
+                             QuestManager.updateObjective(player, questId, objective.id, 1)
                         end
                     end
                 end
@@ -784,38 +831,45 @@ function QuestManager.registerEventHandlers()
     Events.EveryTenMinutes.Add(function()
         for playerId, playerQuests in pairs(QuestManager.playerQuests) do
             local player = getSpecificPlayer(playerId)
-            if player and player:isAlive() then
-                local inventory = player:getInventory()
-                
-                for questId, questInstance in pairs(playerQuests) do
-                    if not questInstance.completed and not questInstance.failed then
-                        local questDef = QuestManager.quests[questId]
-                        
-                        for _, objective in ipairs(questDef.objectives) do
-                            if objective.type == "item" and 
-                               questInstance.objectives[objective.id] and
-                               not questInstance.objectives[objective.id].completed then
-                                
-                                -- Check for each required item
-                                local allItemsFound = true
-                                for _, itemDef in ipairs(objective.items) do
-                                    local itemType = itemDef.itemType
-                                    local count = itemDef.count or 1
-                                    
-                                    if inventory:getItemCount(itemType) < count then
-                                        allItemsFound = false
-                                        break
-                                    end
-                                end
-                                
-                                if allItemsFound and questInstance.objectives[objective.id].available then
-                                    QuestManager.updateObjective(player, questId, objective.id, 1)
-                                end
-                            end
-                        end
-                    end
-                end
-            end
+             if not player or not player:isAlive() then return end
+
+             local inventory = player:getInventory()
+             if not inventory then return end
+
+             for questId, questInstance in pairs(playerQuests) do
+                 if not questInstance.completed and not questInstance.failed then
+                     local questDef = QuestManager.quests[questId]
+
+                     for _, objective in ipairs(questDef.objectives) do
+                         if objective.type == "item" and
+                            questInstance.objectives[objective.id] and
+                            not questInstance.objectives[objective.id].completed and
+                            objective.items then -- Check if objective.items exists
+
+                             -- Check for each required item
+                             local allItemsFound = true
+                             for _, itemDef in ipairs(objective.items) do
+                                 if itemDef and itemDef.itemType then  -- Add nil check for itemDef
+                                     local itemType = itemDef.itemType
+                                     local count = itemDef.count or 1
+
+                                     if inventory:getItemCount(itemType) < count then
+                                         allItemsFound = false
+                                         break
+                                     end
+                                 else
+                                     allItemsFound = false -- If itemDef is nil, objective cannot be completed
+                                     break
+                                 end
+                             end
+
+                             if allItemsFound and questInstance.objectives[objective.id].available then
+                                 QuestManager.updateObjective(player, questId, objective.id, 1)
+                             end
+                         end
+                     end
+                 end
+             end
         end
     end)
     
@@ -824,28 +878,32 @@ function QuestManager.registerEventHandlers()
         -- Only check every few seconds for performance
         if player:getHoursSurvived() % (1/720) > 0.0001 then return end
         
-        local playerId = player:getPlayerNum()
-        if not QuestManager.playerQuests[playerId] then return end
-        
-        local playerX, playerY = player:getX(), player:getY()
-        
-        for questId, questInstance in pairs(QuestManager.playerQuests[playerId]) do
-            if not questInstance.completed and not questInstance.failed then
-                local questDef = QuestManager.quests[questId]
-                
-                for _, objective in ipairs(questDef.objectives) do
-                    if objective.type == "location" and 
-                       questInstance.objectives[objective.id] and
-                       not questInstance.objectives[objective.id].completed and
-                       questInstance.objectives[objective.id].available then
-                        
-                        local distance = math.sqrt(
-                            (playerX - objective.location.x)^2 + 
-                            (playerY - objective.location.y)^2
-                        )
-                    end
-                end
-            end
+         local playerId = player:getPlayerNum()
+         if not QuestManager.playerQuests[playerId] then return end
+
+         local playerX, playerY = player:getX(), player:getY()
+
+         for questId, questInstance in pairs(QuestManager.playerQuests[playerId]) do
+             if not questInstance.completed and not questInstance.failed then
+                 local questDef = QuestManager.quests[questId]
+
+                 for _, objective in ipairs(questDef.objectives) do
+                     if objective.type == "location" and
+                        questInstance.objectives[objective.id] and
+                        not questInstance.objectives[objective.id].completed and
+                        questInstance.objectives[objective.id].available and
+                        objective.location then --Check if location exists
+
+                         local distance = math.sqrt(
+                             (playerX - objective.location.x)^2 +
+                             (playerY - objective.location.y)^2
+                         )
+                         if distance <= 2 then -- 2 tiles for completion
+                             QuestManager.updateObjective(player, questId, objective.id, 1)
+                         end
+                     end
+                 end
+             end
+         end
         end
     end)
-end 
