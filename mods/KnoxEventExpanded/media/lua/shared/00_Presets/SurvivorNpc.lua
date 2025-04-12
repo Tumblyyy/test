@@ -209,13 +209,12 @@ function SurvivorPreset:dressNpcWithOutfit(npc, outfit)
 end
 
 function SurvivorPreset:new()
-    local o = {}    
-
+    local o = {}
+	setmetatable(o, self)
+	self.__index = self
     o.preset = NpcPreset:new("SurvivorNpc", "SurvivorBehaviorTree");
     o.preset.faction = "Survivors";
     o.preset.partyID = "SurvivorNpc";
-    o.preset.quests = {"fetchBandages"}
+    o.preset.quests = {"fetchBandages"};
     return o
 end
-
-SurvivorPreset.instance = SurvivorPreset:new()

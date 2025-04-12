@@ -13,7 +13,9 @@ function SoldierPreset:dressNpc(npc) end
 function SoldierPreset:dressNpcWithOutfit(npc, outfit) end
 
 function SoldierPreset:new()
-    o.preset = NpcPreset.new("SoldierNpc", o);
+    local o = {}
+	setmetatable(o, self)
+	self.__index = self    o.preset = NpcPreset.new("SoldierNpc", o);
     o.preset.faction = "Soldiers";
     o.preset.partyID = "SoldierNpc";
     o.preset:setBehaviorTree("SoldierBehaviorTree");
@@ -32,4 +34,4 @@ function SoldierPreset:new()
 	return o
 end
 
-SoldierPreset.instance = SoldierPreset:new()
+Events.OnInitGlobalModData.Add(function() SoldierPreset.instance = SoldierPreset:new(); end)
