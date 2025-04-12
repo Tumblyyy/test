@@ -1,5 +1,8 @@
 if isClient() then return end;
 
+require "00_Presets/SoldierNpc"
+require "00_Presets/SurvivorNpc"
+
 require "ISBaseObject"
 
 MilitaryFaction = ISBaseObject:derive("MilitaryFaction");

@@ -209,9 +209,8 @@ function SurvivorPreset:dressNpcWithOutfit(npc, outfit)
 end
 
 function SurvivorPreset:new()
-    local o = {}
-    setmetatable(o, self)
-    self.__index = self
+    local o = {}    
+
     o.preset = NpcPreset:new("SurvivorNpc", "SurvivorBehaviorTree");
     o.preset.faction = "Survivors";
     o.preset.partyID = "SurvivorNpc";
@@ -219,4 +218,4 @@ function SurvivorPreset:new()
     return o
 end
 
-Events.OnInitGlobalModData.Add(function() SurvivorPreset.instance = SurvivorPreset:new(); end)
+SurvivorPreset.instance = SurvivorPreset:new()
