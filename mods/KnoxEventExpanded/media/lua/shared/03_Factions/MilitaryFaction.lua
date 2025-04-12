@@ -23,7 +23,7 @@ local function assignDefendNorth(npc, index)
     npc:setGoal("DefendSubTree");
     npc:setSubGoal("");
     local tree = npc:getBehaviorTree();
-    if tree == nil then
+    if tree ~= nil then
         return;
     end
     local defendSubTree = tree:getChildWithName("DefendSubTree");
@@ -58,7 +58,7 @@ local function assignDefendSouth(npc, index)
     npc:setGoal("DefendSubTree");
     npc:setSubGoal("");
     local tree = npc:getBehaviorTree();
-    if tree == nil then
+    if tree ~= nil then
         return;
     end
     local defendSubTree = tree:getChildWithName("DefendSubTree");
@@ -89,7 +89,7 @@ local function assignDefendEast(npc, index)
     npc:setGoal("DefendSubTree");
     npc:setSubGoal("");
     local tree = npc:getBehaviorTree();
-    if tree == nil then
+    if tree ~= nil then
         return;
     end
     local defendSubTree = tree:getChildWithName("DefendSubTree");
